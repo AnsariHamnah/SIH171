@@ -12,11 +12,12 @@ export default defineConfig({
     minify: false,
     sourcemap: true,
     rollupOptions: {
-      input: {
-        background: resolve(__dirname, 'src/background/index.ts'),
-        content: resolve(__dirname, 'src/content/index.ts'),
-        offscreen: resolve(__dirname, 'src/offscreen/index.ts'),
-      },
+  input: {
+    background: resolve(__dirname, 'src/background/index.ts'),
+    content: resolve(__dirname, 'src/content/index.ts'),
+    offscreen: resolve(__dirname, 'src/offscreen/index.ts'),
+    popup: resolve(__dirname, 'src/popup/popup.ts'),
+  },
       output: {
         entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
@@ -29,7 +30,9 @@ export default defineConfig({
       targets: [
         { src: 'manifest.json', dest: '.' },
         { src: 'src/popup', dest: '.' },
-        { src: 'src/icons', dest: '.' },
+        { src: 'src/icons/**', dest: 'icons' },
+        { src: 'src/experiment.html', dest: '.' },
+        { src: 'src/smoke-test.html', dest: '.' },
       ],
     }),
     {

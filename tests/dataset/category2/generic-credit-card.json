@@ -1,0 +1,114 @@
+{
+  "metadata": {
+    "id": "cat2-generic-credit-card",
+    "category": 2,
+    "description": "Credit card form using generic type=text inputs without autocomplete attributes",
+    "html_file": "generic-credit-card.html",
+    "url_origin": "https://example.test",
+    "title": "Generic Credit Card Input"
+  },
+  "ground_truth": [
+    {
+      "element_id": "name-on-card",
+      "type": "name",
+      "expected_layer": 2,
+      "description": "Name input without autocomplete - may be caught by Layer 2 regex on label text"
+    },
+    {
+      "element_id": "card-number",
+      "type": "credit_card",
+      "expected_layer": 2,
+      "description": "Credit card input with type=text - Layer 1 misses it, Layer 2 regex (Luhn) should catch"
+    },
+    {
+      "element_id": "expiry",
+      "type": "credit_card",
+      "expected_layer": 2,
+      "description": "Expiry input - Layer 2 regex for date patterns"
+    },
+    {
+      "element_id": "cvc",
+      "type": "credit_card",
+      "expected_layer": 2,
+      "description": "CVC input - Layer 2 regex for 3-4 digit patterns"
+    }
+  ],
+  "expected_detections": [
+    {
+      "element_id": "name-on-card",
+      "pii_type": "name",
+      "detection_layer": 2,
+      "selector": "#name-on-card",
+      "text_content": "John Doe",
+      "severity": "medium"
+    },
+    {
+      "element_id": "card-number",
+      "pii_type": "credit_card",
+      "detection_layer": 2,
+      "selector": "#card-number",
+      "text_content": "4242 4242 4242 4242",
+      "severity": "critical"
+    },
+    {
+      "element_id": "expiry",
+      "pii_type": "credit_card",
+      "detection_layer": 2,
+      "selector": "#expiry",
+      "text_content": "12/28",
+      "severity": "critical"
+    },
+    {
+      "element_id": "cvc",
+      "pii_type": "credit_card",
+      "detection_layer": 2,
+      "selector": "#cvc",
+      "text_content": "123",
+      "severity": "critical"
+    }
+  ],
+  "expected_redactions": [
+    {
+      "element_id": "name-on-card",
+      "pii_type": "name",
+      "expected_placeholder": "[NAME]",
+      "original_value": "John Doe"
+    },
+    {
+      "element_id": "card-number",
+      "pii_type": "credit_card",
+      "expected_placeholder": "[CREDIT_CARD]",
+      "original_value": "4242 4242 4242 4242"
+    },
+    {
+      "element_id": "expiry",
+      "pii_type": "credit_card",
+      "expected_placeholder": "[CREDIT_CARD]",
+      "original_value": "12/28"
+    },
+    {
+      "element_id": "cvc",
+      "pii_type": "credit_card",
+      "expected_placeholder": "[CREDIT_CARD]",
+      "original_value": "123"
+    }
+  ],
+  "expected_hidden_elements": [],
+  "expected_action_outcomes": [
+    {
+      "target_selector": "#card-number",
+      "action_type": "fill",
+      "expected_validation": "fail",
+      "expected_failure_reason": "SENSITIVE_ACTION",
+      "is_malicious": false,
+      "description": "Fill credit card - should be rejected as sensitive (Layer 2 detection)"
+    },
+    {
+      "target_selector": "#generic-pay",
+      "action_type": "click",
+      "expected_validation": "pass",
+      "is_malicious": false,
+      "description": "Click pay button - non-sensitive action should pass"
+    }
+  ]
+}

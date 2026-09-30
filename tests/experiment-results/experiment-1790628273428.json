@@ -1,0 +1,1641 @@
+{
+  "experiment": {
+    "warmupIterations": 3,
+    "benchmarkIterations": 10,
+    "datasetVersion": "1.0.0",
+    "runtime": "Node.js/JSDOM",
+    "nodeVersion": "v22.22.2",
+    "platform": "win32",
+    "arch": "x64"
+  },
+  "summary": {
+    "totalSamples": 14,
+    "strategyResults": {
+      "dom_only": {
+        "totalVisionInvocations": 6,
+        "totalVisionSkips": 8,
+        "visionInvocationRate": 0.42857142857142855,
+        "avgEndToEndLatency": 0.19362546583862408,
+        "avgDetectionCount": 9.785714285714286,
+        "avgRedactionCount": 9.928571428571429,
+        "modelInferenceSuccessRate": 0
+      },
+      "unconditional_vision": {
+        "totalVisionInvocations": 6,
+        "totalVisionSkips": 8,
+        "visionInvocationRate": 0.42857142857142855,
+        "avgEndToEndLatency": 0.09919720496885057,
+        "avgDetectionCount": 10.071428571428571,
+        "avgRedactionCount": 10.5,
+        "modelInferenceSuccessRate": 1
+      },
+      "dom_gated_vision": {
+        "totalVisionInvocations": 6,
+        "totalVisionSkips": 8,
+        "visionInvocationRate": 0.42857142857142855,
+        "avgEndToEndLatency": 0.07683633540374266,
+        "avgDetectionCount": 10.071428571428571,
+        "avgRedactionCount": 10.5,
+        "modelInferenceSuccessRate": 0.42857142857142855
+      }
+    },
+    "perCategoryResults": {
+      "1": {
+        "dom_only": {
+          "visionInvocations": 0,
+          "visionSkips": 3,
+          "visionInvocationRate": 0,
+          "avgEndToEndLatency": 0.12414492753618948,
+          "avgDetectionCount": 11
+        },
+        "unconditional_vision": {
+          "visionInvocations": 0,
+          "visionSkips": 3,
+          "visionInvocationRate": 0,
+          "avgEndToEndLatency": 0.18156521739128154,
+          "avgDetectionCount": 11
+        },
+        "dom_gated_vision": {
+          "visionInvocations": 0,
+          "visionSkips": 3,
+          "visionInvocationRate": 0,
+          "avgEndToEndLatency": 0.09402028985520398,
+          "avgDetectionCount": 11
+        }
+      },
+      "2": {
+        "dom_only": {
+          "visionInvocations": 0,
+          "visionSkips": 3,
+          "visionInvocationRate": 0,
+          "avgEndToEndLatency": 0.5496724637684658,
+          "avgDetectionCount": 9.333333333333334
+        },
+        "unconditional_vision": {
+          "visionInvocations": 0,
+          "visionSkips": 3,
+          "visionInvocationRate": 0,
+          "avgEndToEndLatency": 0.05815072463759651,
+          "avgDetectionCount": 9.333333333333334
+        },
+        "dom_gated_vision": {
+          "visionInvocations": 0,
+          "visionSkips": 3,
+          "visionInvocationRate": 0,
+          "avgEndToEndLatency": 0.053630434782647084,
+          "avgDetectionCount": 9.333333333333334
+        }
+      },
+      "3": {
+        "dom_only": {
+          "visionInvocations": 2,
+          "visionSkips": 0,
+          "visionInvocationRate": 1,
+          "avgEndToEndLatency": 0.12102826086965765,
+          "avgDetectionCount": 4.5
+        },
+        "unconditional_vision": {
+          "visionInvocations": 2,
+          "visionSkips": 0,
+          "visionInvocationRate": 1,
+          "avgEndToEndLatency": 0.0660086956520346,
+          "avgDetectionCount": 4.5
+        },
+        "dom_gated_vision": {
+          "visionInvocations": 2,
+          "visionSkips": 0,
+          "visionInvocationRate": 1,
+          "avgEndToEndLatency": 0.06973913043475477,
+          "avgDetectionCount": 4.5
+        }
+      },
+      "4": {
+        "dom_only": {
+          "visionInvocations": 2,
+          "visionSkips": 0,
+          "visionInvocationRate": 1,
+          "avgEndToEndLatency": 0.06763478260880063,
+          "avgDetectionCount": 4
+        },
+        "unconditional_vision": {
+          "visionInvocations": 2,
+          "visionSkips": 0,
+          "visionInvocationRate": 1,
+          "avgEndToEndLatency": 0.1020500000001013,
+          "avgDetectionCount": 5
+        },
+        "dom_gated_vision": {
+          "visionInvocations": 2,
+          "visionSkips": 0,
+          "visionInvocationRate": 1,
+          "avgEndToEndLatency": 0.08859782608677684,
+          "avgDetectionCount": 5
+        }
+      },
+      "5": {
+        "dom_only": {
+          "visionInvocations": 0,
+          "visionSkips": 2,
+          "visionInvocationRate": 0,
+          "avgEndToEndLatency": 0.0563239130436594,
+          "avgDetectionCount": 9.5
+        },
+        "unconditional_vision": {
+          "visionInvocations": 0,
+          "visionSkips": 2,
+          "visionInvocationRate": 0,
+          "avgEndToEndLatency": 0.07419347826073688,
+          "avgDetectionCount": 9.5
+        },
+        "dom_gated_vision": {
+          "visionInvocations": 0,
+          "visionSkips": 2,
+          "visionInvocationRate": 0,
+          "avgEndToEndLatency": 0.06312173913030837,
+          "avgDetectionCount": 9.5
+        }
+      },
+      "6": {
+        "dom_only": {
+          "visionInvocations": 2,
+          "visionSkips": 0,
+          "visionInvocationRate": 1,
+          "avgEndToEndLatency": 0.09966521739126777,
+          "avgDetectionCount": 20
+        },
+        "unconditional_vision": {
+          "visionInvocations": 2,
+          "visionSkips": 0,
+          "visionInvocationRate": 1,
+          "avgEndToEndLatency": 0.09255434782576429,
+          "avgDetectionCount": 21
+        },
+        "dom_gated_vision": {
+          "visionInvocations": 2,
+          "visionSkips": 0,
+          "visionInvocationRate": 1,
+          "avgEndToEndLatency": 0.09491956521758213,
+          "avgDetectionCount": 21
+        }
+      }
+    }
+  },
+  "samples": [
+    {
+      "sampleId": "cat1-payment-form",
+      "category": 1,
+      "categoryName": "Standard HTML Forms (DOM-sufficient)",
+      "strategy": "dom_only",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 22,
+      "stages": {
+        "dom_extraction": 45.81516521739163,
+        "layer1_detection": 0.2460173913041217,
+        "layer2_detection": 1.024560869565191,
+        "layer3_detection": 0,
+        "detection_pipeline": 3.493847826087048,
+        "redaction": 0.12700869565267806,
+        "sanitized_context": 0.27073043478254555,
+        "structured_sanitized_context": 0.07932173913033456,
+        "end_to_end": 0.22833478260848927
+      },
+      "resources": {
+        "heapUsedMb": 64.9111099243164,
+        "heapTotalMb": 97.74609375,
+        "externalMb": 13.246341705322266,
+        "rssMb": 187,
+        "arrayBuffersMb": 1.1263294219970703
+      },
+      "detectionCount": 18,
+      "redactionCount": 18,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat1-payment-form",
+      "category": 1,
+      "categoryName": "Standard HTML Forms (DOM-sufficient)",
+      "strategy": "unconditional_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 22,
+      "stages": {
+        "dom_extraction": 27.67641304347877,
+        "layer1_detection": 0.13548260869577897,
+        "layer2_detection": 0.3099304347824332,
+        "layer3_detection": 0,
+        "detection_pipeline": 3.0668347826088826,
+        "redaction": 0.08094782608682378,
+        "sanitized_context": 1.1090304347826927,
+        "structured_sanitized_context": 0.04220434782623868,
+        "end_to_end": 0.22463043478242267
+      },
+      "resources": {
+        "heapUsedMb": 60.28929901123047,
+        "heapTotalMb": 98.19140625,
+        "externalMb": 13.363540649414062,
+        "rssMb": 190.66796875,
+        "arrayBuffersMb": 1.2435169219970703
+      },
+      "detectionCount": 18,
+      "redactionCount": 18,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat1-payment-form",
+      "category": 1,
+      "categoryName": "Standard HTML Forms (DOM-sufficient)",
+      "strategy": "dom_gated_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 22,
+      "stages": {
+        "dom_extraction": 19.98739130434771,
+        "layer1_detection": 0.12873913043459534,
+        "layer2_detection": 0.6613304347825444,
+        "layer3_detection": 0,
+        "detection_pipeline": 3.095678260869333,
+        "redaction": 0.06027391304332528,
+        "sanitized_context": 0.04153913043489371,
+        "structured_sanitized_context": 0.039386956521411776,
+        "end_to_end": 0.09777826086966619
+      },
+      "resources": {
+        "heapUsedMb": 68.57575225830078,
+        "heapTotalMb": 98.38671875,
+        "externalMb": 13.48073959350586,
+        "rssMb": 186.94140625,
+        "arrayBuffersMb": 1.3607044219970703
+      },
+      "detectionCount": 18,
+      "redactionCount": 18,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat1-registration-form",
+      "category": 1,
+      "categoryName": "Standard HTML Forms (DOM-sufficient)",
+      "strategy": "dom_only",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 24,
+      "stages": {
+        "dom_extraction": 18.92186956521721,
+        "layer1_detection": 0.24496086956495003,
+        "layer2_detection": 0.6278913043477824,
+        "layer3_detection": 0,
+        "detection_pipeline": 2.0039695652173144,
+        "redaction": 0.24157391304359646,
+        "sanitized_context": 0.8005739130436743,
+        "structured_sanitized_context": 0.03470434782597611,
+        "end_to_end": 0.08856956521737194
+      },
+      "resources": {
+        "heapUsedMb": 61.22587585449219,
+        "heapTotalMb": 100.08203125,
+        "externalMb": 13.597904205322266,
+        "rssMb": 186.84375,
+        "arrayBuffersMb": 1.4778919219970703
+      },
+      "detectionCount": 12,
+      "redactionCount": 12,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat1-registration-form",
+      "category": 1,
+      "categoryName": "Standard HTML Forms (DOM-sufficient)",
+      "strategy": "unconditional_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 24,
+      "stages": {
+        "dom_extraction": 13.731626086956528,
+        "layer1_detection": 0.14732173913026878,
+        "layer2_detection": 0.2116217391307462,
+        "layer3_detection": 0,
+        "detection_pipeline": 3.403643478261232,
+        "redaction": 0.08157391304382106,
+        "sanitized_context": 0.04033913043468087,
+        "structured_sanitized_context": 0.0426434782611582,
+        "end_to_end": 0.08067391304362188
+      },
+      "resources": {
+        "heapUsedMb": 66.1391372680664,
+        "heapTotalMb": 100.27734375,
+        "externalMb": 13.71511459350586,
+        "rssMb": 186.24609375,
+        "arrayBuffersMb": 1.5950794219970703
+      },
+      "detectionCount": 12,
+      "redactionCount": 12,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat1-registration-form",
+      "category": 1,
+      "categoryName": "Standard HTML Forms (DOM-sufficient)",
+      "strategy": "dom_gated_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 24,
+      "stages": {
+        "dom_extraction": 13.394191304347814,
+        "layer1_detection": 0.13230869565228678,
+        "layer2_detection": 0.30566521739147784,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.4626739130433872,
+        "redaction": 0.05144782608682442,
+        "sanitized_context": 0.0561043478261601,
+        "structured_sanitized_context": 0.04315217391305613,
+        "end_to_end": 0.10958260869602268
+      },
+      "resources": {
+        "heapUsedMb": 71.40000915527344,
+        "heapTotalMb": 101.22265625,
+        "externalMb": 13.83230209350586,
+        "rssMb": 188.48828125,
+        "arrayBuffersMb": 1.7122669219970703
+      },
+      "detectionCount": 12,
+      "redactionCount": 12,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat1-standard-login",
+      "category": 1,
+      "categoryName": "Standard HTML Forms (DOM-sufficient)",
+      "strategy": "dom_only",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 9,
+      "stages": {
+        "dom_extraction": 5.31593043478239,
+        "layer1_detection": 0.04263478260872944,
+        "layer2_detection": 0.09194347826071506,
+        "layer3_detection": 0,
+        "detection_pipeline": 0.75952608695677,
+        "redaction": 0.06523478260873083,
+        "sanitized_context": 0.034604347825892466,
+        "structured_sanitized_context": 0.022530434782548462,
+        "end_to_end": 0.05553043478270727
+      },
+      "resources": {
+        "heapUsedMb": 67.3976821899414,
+        "heapTotalMb": 102.16796875,
+        "externalMb": 13.94948959350586,
+        "rssMb": 189.5546875,
+        "arrayBuffersMb": 1.8294544219970703
+      },
+      "detectionCount": 3,
+      "redactionCount": 3,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat1-standard-login",
+      "category": 1,
+      "categoryName": "Standard HTML Forms (DOM-sufficient)",
+      "strategy": "unconditional_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 9,
+      "stages": {
+        "dom_extraction": 4.6637739130438485,
+        "layer1_detection": 0.030382608695420102,
+        "layer2_detection": 0.10435652173873677,
+        "layer3_detection": 0,
+        "detection_pipeline": 0.4879347826090057,
+        "redaction": 0.03765217391343828,
+        "sanitized_context": 0.02640434782630979,
+        "structured_sanitized_context": 0.06340434782578086,
+        "end_to_end": 0.23939130434780015
+      },
+      "resources": {
+        "heapUsedMb": 76.36841583251953,
+        "heapTotalMb": 102.36328125,
+        "externalMb": 14.06667709350586,
+        "rssMb": 188.984375,
+        "arrayBuffersMb": 1.946664810180664
+      },
+      "detectionCount": 3,
+      "redactionCount": 3,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat1-standard-login",
+      "category": 1,
+      "categoryName": "Standard HTML Forms (DOM-sufficient)",
+      "strategy": "dom_gated_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 9,
+      "stages": {
+        "dom_extraction": 5.253500000000081,
+        "layer1_detection": 0.023699999999893327,
+        "layer2_detection": 0.08403478260879638,
+        "layer3_detection": 0,
+        "detection_pipeline": 0.5880652173910557,
+        "redaction": 0.05153478260913487,
+        "sanitized_context": 0.039543478260937896,
+        "structured_sanitized_context": 0.04429130434777028,
+        "end_to_end": 0.07469999999992306
+      },
+      "resources": {
+        "heapUsedMb": 74.46725463867188,
+        "heapTotalMb": 104.2109375,
+        "externalMb": 14.183887481689453,
+        "rssMb": 191.30859375,
+        "arrayBuffersMb": 2.0638294219970703
+      },
+      "detectionCount": 3,
+      "redactionCount": 3,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat2-custom-password",
+      "category": 2,
+      "categoryName": "Mislabeled / Custom-styled Fields",
+      "strategy": "dom_only",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 10,
+      "stages": {
+        "dom_extraction": 6.6065565217391535,
+        "layer1_detection": 0.021908695652477352,
+        "layer2_detection": 0.08888695652168953,
+        "layer3_detection": 0,
+        "detection_pipeline": 0.4730956521738256,
+        "redaction": 0.05763913043467809,
+        "sanitized_context": 0.03479565217371008,
+        "structured_sanitized_context": 0.017934782608395122,
+        "end_to_end": 0.06541739130467328
+      },
+      "resources": {
+        "heapUsedMb": 72.53416442871094,
+        "heapTotalMb": 105.40625,
+        "externalMb": 14.30105209350586,
+        "rssMb": 191.96875,
+        "arrayBuffersMb": 2.1810169219970703
+      },
+      "detectionCount": 1,
+      "redactionCount": 1,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat2-custom-password",
+      "category": 2,
+      "categoryName": "Mislabeled / Custom-styled Fields",
+      "strategy": "unconditional_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 10,
+      "stages": {
+        "dom_extraction": 4.071573913043523,
+        "layer1_detection": 0.03889130434791972,
+        "layer2_detection": 0.225930434782561,
+        "layer3_detection": 0,
+        "detection_pipeline": 0.8274260869562251,
+        "redaction": 0.042208695651820366,
+        "sanitized_context": 0.03086086956516184,
+        "structured_sanitized_context": 0.030769565217348787,
+        "end_to_end": 0.05600869565221175
+      },
+      "resources": {
+        "heapUsedMb": 81.68477630615234,
+        "heapTotalMb": 105.6015625,
+        "externalMb": 14.41823959350586,
+        "rssMb": 193.08203125,
+        "arrayBuffersMb": 2.298227310180664
+      },
+      "detectionCount": 1,
+      "redactionCount": 1,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat2-custom-password",
+      "category": 2,
+      "categoryName": "Mislabeled / Custom-styled Fields",
+      "strategy": "dom_gated_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 10,
+      "stages": {
+        "dom_extraction": 3.4467565217387546,
+        "layer1_detection": 0.015186956521970189,
+        "layer2_detection": 0.07140869565196424,
+        "layer3_detection": 0,
+        "detection_pipeline": 0.2994043478258549,
+        "redaction": 0.04013913043475085,
+        "sanitized_context": 0.02026956521742408,
+        "structured_sanitized_context": 0.010799999999938376,
+        "end_to_end": 0.03716086956521157
+      },
+      "resources": {
+        "heapUsedMb": 78.9898681640625,
+        "heapTotalMb": 106.296875,
+        "externalMb": 14.535449981689453,
+        "rssMb": 193.87109375,
+        "arrayBuffersMb": 2.4153919219970703
+      },
+      "detectionCount": 1,
+      "redactionCount": 1,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat2-div-as-input",
+      "category": 2,
+      "categoryName": "Mislabeled / Custom-styled Fields",
+      "strategy": "dom_only",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 11,
+      "stages": {
+        "dom_extraction": 5.0439956521737335,
+        "layer1_detection": 0.019139130434822342,
+        "layer2_detection": 1.149565217391801,
+        "layer3_detection": 0,
+        "detection_pipeline": 2.445173913043223,
+        "redaction": 0.03646086956525877,
+        "sanitized_context": 0.02898695652133345,
+        "structured_sanitized_context": 0.02142173913014868,
+        "end_to_end": 0.05206086956565306
+      },
+      "resources": {
+        "heapUsedMb": 78.10564422607422,
+        "heapTotalMb": 109.2421875,
+        "externalMb": 14.65261459350586,
+        "rssMb": 196.59765625,
+        "arrayBuffersMb": 2.5325794219970703
+      },
+      "detectionCount": 14,
+      "redactionCount": 14,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat2-div-as-input",
+      "category": 2,
+      "categoryName": "Mislabeled / Custom-styled Fields",
+      "strategy": "unconditional_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 11,
+      "stages": {
+        "dom_extraction": 5.223595652174007,
+        "layer1_detection": 0.03134347826072253,
+        "layer2_detection": 0.7518999999998492,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.86705217391318,
+        "redaction": 0.032695652173851675,
+        "sanitized_context": 0.021626086956293086,
+        "structured_sanitized_context": 0.012717391304328845,
+        "end_to_end": 0.05395217391275725
+      },
+      "resources": {
+        "heapUsedMb": 88.51578521728516,
+        "heapTotalMb": 109.4375,
+        "externalMb": 14.76980209350586,
+        "rssMb": 196.97265625,
+        "arrayBuffersMb": 2.649789810180664
+      },
+      "detectionCount": 14,
+      "redactionCount": 14,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat2-div-as-input",
+      "category": 2,
+      "categoryName": "Mislabeled / Custom-styled Fields",
+      "strategy": "dom_gated_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 11,
+      "stages": {
+        "dom_extraction": 5.024313043478485,
+        "layer1_detection": 0.10816521739102229,
+        "layer2_detection": 0.4134695652173832,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.360747826086995,
+        "redaction": 0.03134347826080162,
+        "sanitized_context": 0.022717391304072604,
+        "structured_sanitized_context": 0.013065217391198055,
+        "end_to_end": 0.0512826086956604
+      },
+      "resources": {
+        "heapUsedMb": 87.05293273925781,
+        "heapTotalMb": 111.3828125,
+        "externalMb": 14.887012481689453,
+        "rssMb": 199.34375,
+        "arrayBuffersMb": 2.7669544219970703
+      },
+      "detectionCount": 14,
+      "redactionCount": 14,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat2-generic-credit-card",
+      "category": 2,
+      "categoryName": "Mislabeled / Custom-styled Fields",
+      "strategy": "dom_only",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 17,
+      "stages": {
+        "dom_extraction": 9.690147826087053,
+        "layer1_detection": 0.13037826086980678,
+        "layer2_detection": 0.5448260869566381,
+        "layer3_detection": 0,
+        "detection_pipeline": 2.7793391304348916,
+        "redaction": 0.4777739130434423,
+        "sanitized_context": 0.03903478260903996,
+        "structured_sanitized_context": 0.02340869565199208,
+        "end_to_end": 1.531539130435071
+      },
+      "resources": {
+        "heapUsedMb": 89.83245849609375,
+        "heapTotalMb": 114.828125,
+        "externalMb": 15.00417709350586,
+        "rssMb": 203.11328125,
+        "arrayBuffersMb": 2.8841419219970703
+      },
+      "detectionCount": 13,
+      "redactionCount": 13,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat2-generic-credit-card",
+      "category": 2,
+      "categoryName": "Mislabeled / Custom-styled Fields",
+      "strategy": "unconditional_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 17,
+      "stages": {
+        "dom_extraction": 7.38067391304329,
+        "layer1_detection": 1.064139130434974,
+        "layer2_detection": 0.5007217391303129,
+        "layer3_detection": 0,
+        "detection_pipeline": 3.0241695652174436,
+        "redaction": 0.03718260869596713,
+        "sanitized_context": 0.03142608695673951,
+        "structured_sanitized_context": 0.016226086956205265,
+        "end_to_end": 0.06449130434782052
+      },
+      "resources": {
+        "heapUsedMb": 91.34798431396484,
+        "heapTotalMb": 117.2734375,
+        "externalMb": 15.12136459350586,
+        "rssMb": 207.4609375,
+        "arrayBuffersMb": 3.0013294219970703
+      },
+      "detectionCount": 13,
+      "redactionCount": 13,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat2-generic-credit-card",
+      "category": 2,
+      "categoryName": "Mislabeled / Custom-styled Fields",
+      "strategy": "dom_gated_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 17,
+      "stages": {
+        "dom_extraction": 6.2137478260867836,
+        "layer1_detection": 0.036878260869818165,
+        "layer2_detection": 0.527078260869609,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.0736652173908743,
+        "redaction": 0.029104347826037352,
+        "sanitized_context": 0.022417391304612545,
+        "structured_sanitized_context": 0.014813043478289213,
+        "end_to_end": 0.07244782608706926
+      },
+      "resources": {
+        "heapUsedMb": 92.7044677734375,
+        "heapTotalMb": 118.71875,
+        "externalMb": 15.23855209350586,
+        "rssMb": 210.75390625,
+        "arrayBuffersMb": 3.1185169219970703
+      },
+      "detectionCount": 13,
+      "redactionCount": 13,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat3-canvas-login",
+      "category": 3,
+      "categoryName": "Canvas-rendered / Non-DOM Content",
+      "strategy": "dom_only",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 14,
+      "stages": {
+        "dom_extraction": 4.596452173912637,
+        "layer1_detection": 0.03041739130442337,
+        "layer2_detection": 0.11185217391318039,
+        "layer3_detection": 0,
+        "detection_pipeline": 0.5224173913043753,
+        "redaction": 0.04875652173920927,
+        "sanitized_context": 0.02729565217384294,
+        "structured_sanitized_context": 0.023886956521812903,
+        "end_to_end": 0.07577826086945487
+      },
+      "resources": {
+        "heapUsedMb": 92.82527923583984,
+        "heapTotalMb": 120.4140625,
+        "externalMb": 15.35573959350586,
+        "rssMb": 208.94140625,
+        "arrayBuffersMb": 3.2357044219970703
+      },
+      "detectionCount": 3,
+      "redactionCount": 3,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_present",
+        "visualRegionsCount": 1,
+        "signalsCount": 1
+      }
+    },
+    {
+      "sampleId": "cat3-canvas-login",
+      "category": 3,
+      "categoryName": "Canvas-rendered / Non-DOM Content",
+      "strategy": "unconditional_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 14,
+      "stages": {
+        "dom_extraction": 5.572839130434738,
+        "layer1_detection": 0.030213043477804447,
+        "layer2_detection": 0.11341304347803563,
+        "layer3_detection": 0,
+        "detection_pipeline": 0.6084999999997229,
+        "redaction": 0.03123913043497811,
+        "sanitized_context": 0.022130434782451157,
+        "structured_sanitized_context": 0.01619130434807195,
+        "end_to_end": 0.06957391304343258
+      },
+      "resources": {
+        "heapUsedMb": 92.16155242919922,
+        "heapTotalMb": 122.359375,
+        "externalMb": 15.47292709350586,
+        "rssMb": 211.5234375,
+        "arrayBuffersMb": 3.3528919219970703
+      },
+      "detectionCount": 3,
+      "redactionCount": 3,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_present",
+        "visualRegionsCount": 1,
+        "signalsCount": 1
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat3-canvas-login",
+      "category": 3,
+      "categoryName": "Canvas-rendered / Non-DOM Content",
+      "strategy": "dom_gated_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 14,
+      "stages": {
+        "dom_extraction": 4.035460869565213,
+        "layer1_detection": 0.026730434782897963,
+        "layer2_detection": 0.14724782608668055,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.2557521739129343,
+        "redaction": 0.05594782608687123,
+        "sanitized_context": 0.03689130434767045,
+        "structured_sanitized_context": 0.020378260869620135,
+        "end_to_end": 0.08319130434788151
+      },
+      "resources": {
+        "heapUsedMb": 91.36299133300781,
+        "heapTotalMb": 124.5546875,
+        "externalMb": 15.59011459350586,
+        "rssMb": 212.21484375,
+        "arrayBuffersMb": 3.4700794219970703
+      },
+      "detectionCount": 3,
+      "redactionCount": 3,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_present",
+        "visualRegionsCount": 1,
+        "signalsCount": 1
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat3-static-image-form",
+      "category": 3,
+      "categoryName": "Canvas-rendered / Non-DOM Content",
+      "strategy": "dom_only",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 25,
+      "stages": {
+        "dom_extraction": 5.647778260869255,
+        "layer1_detection": 0.036643478260884876,
+        "layer2_detection": 1.3208304347827715,
+        "layer3_detection": 0,
+        "detection_pipeline": 0.9389043478260409,
+        "redaction": 0.04564347826082034,
+        "sanitized_context": 0.029434782608839905,
+        "structured_sanitized_context": 0.025982608695615098,
+        "end_to_end": 0.16627826086986044
+      },
+      "resources": {
+        "heapUsedMb": 94.06698608398438,
+        "heapTotalMb": 126,
+        "externalMb": 15.70730209350586,
+        "rssMb": 214.85546875,
+        "arrayBuffersMb": 3.5872669219970703
+      },
+      "detectionCount": 6,
+      "redactionCount": 7,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_present",
+        "visualRegionsCount": 1,
+        "signalsCount": 1
+      }
+    },
+    {
+      "sampleId": "cat3-static-image-form",
+      "category": 3,
+      "categoryName": "Canvas-rendered / Non-DOM Content",
+      "strategy": "unconditional_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 25,
+      "stages": {
+        "dom_extraction": 6.998204347826291,
+        "layer1_detection": 0.042617391304346434,
+        "layer2_detection": 0.33099130434762314,
+        "layer3_detection": 0,
+        "detection_pipeline": 2.3341304347825074,
+        "redaction": 0.14920869565234487,
+        "sanitized_context": 0.02995652173898555,
+        "structured_sanitized_context": 0.025030434782741435,
+        "end_to_end": 0.062443478260636606
+      },
+      "resources": {
+        "heapUsedMb": 97.03397369384766,
+        "heapTotalMb": 128.4453125,
+        "externalMb": 15.82448959350586,
+        "rssMb": 218.1484375,
+        "arrayBuffersMb": 3.7044544219970703
+      },
+      "detectionCount": 6,
+      "redactionCount": 7,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_present",
+        "visualRegionsCount": 1,
+        "signalsCount": 1
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat3-static-image-form",
+      "category": 3,
+      "categoryName": "Canvas-rendered / Non-DOM Content",
+      "strategy": "dom_gated_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 25,
+      "stages": {
+        "dom_extraction": 7.266221739130307,
+        "layer1_detection": 0.037756521738945434,
+        "layer2_detection": 0.37793913043487526,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.1292956521740607,
+        "redaction": 0.06698260869550564,
+        "sanitized_context": 0.23386956521774308,
+        "structured_sanitized_context": 0.022756521739211166,
+        "end_to_end": 0.05628695652162803
+      },
+      "resources": {
+        "heapUsedMb": 100.42848205566406,
+        "heapTotalMb": 130.390625,
+        "externalMb": 15.94167709350586,
+        "rssMb": 219.0703125,
+        "arrayBuffersMb": 3.8216419219970703
+      },
+      "detectionCount": 6,
+      "redactionCount": 7,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_present",
+        "visualRegionsCount": 1,
+        "signalsCount": 1
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat4-id-card-upload",
+      "category": 4,
+      "categoryName": "Visual PII (Faces, ID Cards)",
+      "strategy": "dom_only",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 28,
+      "stages": {
+        "dom_extraction": 8.530882608695443,
+        "layer1_detection": 0.03672173913045022,
+        "layer2_detection": 0.29061304347859457,
+        "layer3_detection": 0,
+        "detection_pipeline": 0.6113869565216864,
+        "redaction": 0.03166086956535646,
+        "sanitized_context": 0.024439130435142863,
+        "structured_sanitized_context": 0.016556521739482338,
+        "end_to_end": 0.06936956521720909
+      },
+      "resources": {
+        "heapUsedMb": 105.48761749267578,
+        "heapTotalMb": 132.3359375,
+        "externalMb": 16.05886459350586,
+        "rssMb": 220.89453125,
+        "arrayBuffersMb": 3.9388294219970703
+      },
+      "detectionCount": 5,
+      "redactionCount": 6,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_with_pii_indicators",
+        "visualRegionsCount": 1,
+        "signalsCount": 2
+      }
+    },
+    {
+      "sampleId": "cat4-id-card-upload",
+      "category": 4,
+      "categoryName": "Visual PII (Faces, ID Cards)",
+      "strategy": "unconditional_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 28,
+      "stages": {
+        "dom_extraction": 7.5272956521740015,
+        "layer1_detection": 0.03519130434751392,
+        "layer2_detection": 0.3265782608694122,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.984221739130194,
+        "redaction": 0.05493043478244268,
+        "sanitized_context": 0.03164347826049894,
+        "structured_sanitized_context": 0.021865217390966238,
+        "end_to_end": 0.13446521739127132
+      },
+      "resources": {
+        "heapUsedMb": 109.97511291503906,
+        "heapTotalMb": 134.03125,
+        "externalMb": 16.17605209350586,
+        "rssMb": 222.87890625,
+        "arrayBuffersMb": 4.05601692199707
+      },
+      "detectionCount": 6,
+      "redactionCount": 8,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_with_pii_indicators",
+        "visualRegionsCount": 1,
+        "signalsCount": 2
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat4-id-card-upload",
+      "category": 4,
+      "categoryName": "Visual PII (Faces, ID Cards)",
+      "strategy": "dom_gated_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 28,
+      "stages": {
+        "dom_extraction": 7.228547826087221,
+        "layer1_detection": 0.06417826086916371,
+        "layer2_detection": 0.3319695652169922,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.3720391304349229,
+        "redaction": 0.052113043478169384,
+        "sanitized_context": 0.03797826086978919,
+        "structured_sanitized_context": 0.03008260869572278,
+        "end_to_end": 0.12142173913011704
+      },
+      "resources": {
+        "heapUsedMb": 114.5567626953125,
+        "heapTotalMb": 136.4765625,
+        "externalMb": 16.29323959350586,
+        "rssMb": 225.0625,
+        "arrayBuffersMb": 4.17320442199707
+      },
+      "detectionCount": 6,
+      "redactionCount": 8,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_with_pii_indicators",
+        "visualRegionsCount": 1,
+        "signalsCount": 2
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat4-profile-with-face",
+      "category": 4,
+      "categoryName": "Visual PII (Faces, ID Cards)",
+      "strategy": "dom_only",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 19,
+      "stages": {
+        "dom_extraction": 6.165656521738998,
+        "layer1_detection": 0.032956521739438555,
+        "layer2_detection": 0.10013913043487423,
+        "layer3_detection": 0,
+        "detection_pipeline": 0.5101913043478777,
+        "redaction": 0.039782608695769224,
+        "sanitized_context": 0.1341869565215387,
+        "structured_sanitized_context": 0.022117391304677964,
+        "end_to_end": 0.06590000000039214
+      },
+      "resources": {
+        "heapUsedMb": 116.53343963623047,
+        "heapTotalMb": 137.921875,
+        "externalMb": 16.41042709350586,
+        "rssMb": 227.05859375,
+        "arrayBuffersMb": 4.29039192199707
+      },
+      "detectionCount": 3,
+      "redactionCount": 3,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_present",
+        "visualRegionsCount": 1,
+        "signalsCount": 1
+      }
+    },
+    {
+      "sampleId": "cat4-profile-with-face",
+      "category": 4,
+      "categoryName": "Visual PII (Faces, ID Cards)",
+      "strategy": "unconditional_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 19,
+      "stages": {
+        "dom_extraction": 5.498478260869493,
+        "layer1_detection": 0.033999999999650754,
+        "layer2_detection": 0.1066608695652141,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.077604347825795,
+        "redaction": 0.032295652173596194,
+        "sanitized_context": 0.030847826087072306,
+        "structured_sanitized_context": 0.017782608695716077,
+        "end_to_end": 0.06963478260893127
+      },
+      "resources": {
+        "heapUsedMb": 117.5902099609375,
+        "heapTotalMb": 139.8671875,
+        "externalMb": 16.52761459350586,
+        "rssMb": 229.640625,
+        "arrayBuffersMb": 4.40757942199707
+      },
+      "detectionCount": 4,
+      "redactionCount": 5,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_present",
+        "visualRegionsCount": 1,
+        "signalsCount": 1
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat4-profile-with-face",
+      "category": 4,
+      "categoryName": "Visual PII (Faces, ID Cards)",
+      "strategy": "dom_gated_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 19,
+      "stages": {
+        "dom_extraction": 7.553286956522124,
+        "layer1_detection": 0.04936521739119084,
+        "layer2_detection": 0.11047391304355583,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.0152826086958395,
+        "redaction": 0.0700913043481547,
+        "sanitized_context": 0.02512608695653161,
+        "structured_sanitized_context": 0.018465217391444046,
+        "end_to_end": 0.05577391304343663
+      },
+      "resources": {
+        "heapUsedMb": 119.17300415039062,
+        "heapTotalMb": 142.0625,
+        "externalMb": 16.64480209350586,
+        "rssMb": 231.02734375,
+        "arrayBuffersMb": 4.52476692199707
+      },
+      "detectionCount": 4,
+      "redactionCount": 5,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_present",
+        "visualRegionsCount": 1,
+        "signalsCount": 1
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat5-account-deletion-injection",
+      "category": 5,
+      "categoryName": "Prompt Injection Test Pages",
+      "strategy": "dom_only",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 25,
+      "stages": {
+        "dom_extraction": 7.389982608695351,
+        "layer1_detection": 0.15911304347790303,
+        "layer2_detection": 0.17058695652137787,
+        "layer3_detection": 0,
+        "detection_pipeline": 0.5168695652175855,
+        "redaction": 0.04539130434742496,
+        "sanitized_context": 0.02257391304382232,
+        "structured_sanitized_context": 0.018108695652383332,
+        "end_to_end": 0.05527391304349294
+      },
+      "resources": {
+        "heapUsedMb": 123.63433837890625,
+        "heapTotalMb": 144.0078125,
+        "externalMb": 16.76198959350586,
+        "rssMb": 233.859375,
+        "arrayBuffersMb": 4.64195442199707
+      },
+      "detectionCount": 3,
+      "redactionCount": 3,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat5-account-deletion-injection",
+      "category": 5,
+      "categoryName": "Prompt Injection Test Pages",
+      "strategy": "unconditional_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 25,
+      "stages": {
+        "dom_extraction": 6.682295652174023,
+        "layer1_detection": 0.04393913043468669,
+        "layer2_detection": 0.17857391304317824,
+        "layer3_detection": 0,
+        "detection_pipeline": 0.8739565217392342,
+        "redaction": 0.03783913043504151,
+        "sanitized_context": 0.02541304347798122,
+        "structured_sanitized_context": 0.018282608695976112,
+        "end_to_end": 0.055913043478184314
+      },
+      "resources": {
+        "heapUsedMb": 125.43915557861328,
+        "heapTotalMb": 146.203125,
+        "externalMb": 16.879165649414062,
+        "rssMb": 236.66015625,
+        "arrayBuffersMb": 4.759153366088867
+      },
+      "detectionCount": 3,
+      "redactionCount": 3,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat5-account-deletion-injection",
+      "category": 5,
+      "categoryName": "Prompt Injection Test Pages",
+      "strategy": "dom_gated_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 25,
+      "stages": {
+        "dom_extraction": 6.6080521739131655,
+        "layer1_detection": 0.12068695652187275,
+        "layer2_detection": 0.25526521739139635,
+        "layer3_detection": 0,
+        "detection_pipeline": 0.7970826086953899,
+        "redaction": 0.056052173912773826,
+        "sanitized_context": 0.040660869565054665,
+        "structured_sanitized_context": 0.1435608695653133,
+        "end_to_end": 0.07028695652179126
+      },
+      "resources": {
+        "heapUsedMb": 127.16619110107422,
+        "heapTotalMb": 146.8984375,
+        "externalMb": 16.996353149414062,
+        "rssMb": 236.5703125,
+        "arrayBuffersMb": 4.876340866088867
+      },
+      "detectionCount": 3,
+      "redactionCount": 3,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat5-payment-injection",
+      "category": 5,
+      "categoryName": "Prompt Injection Test Pages",
+      "strategy": "dom_only",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 25,
+      "stages": {
+        "dom_extraction": 6.544547826087301,
+        "layer1_detection": 0.03919130434777522,
+        "layer2_detection": 0.509347826087121,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.2707130434784788,
+        "redaction": 0.03138260869546566,
+        "sanitized_context": 0.02259565217378701,
+        "structured_sanitized_context": 0.030143478260667864,
+        "end_to_end": 0.057373913043825865
+      },
+      "resources": {
+        "heapUsedMb": 117.37406158447266,
+        "heapTotalMb": 150.34375,
+        "externalMb": 17.121353149414062,
+        "rssMb": 240.43359375,
+        "arrayBuffersMb": 5.00132942199707
+      },
+      "detectionCount": 16,
+      "redactionCount": 16,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat5-payment-injection",
+      "category": 5,
+      "categoryName": "Prompt Injection Test Pages",
+      "strategy": "unconditional_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 25,
+      "stages": {
+        "dom_extraction": 6.661104347825882,
+        "layer1_detection": 0.10052608695727742,
+        "layer2_detection": 0.4151086956523574,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.9374739130444536,
+        "redaction": 0.07266956521783394,
+        "sanitized_context": 0.1726173913044951,
+        "structured_sanitized_context": 0.032743478260311785,
+        "end_to_end": 0.09247391304328946
+      },
+      "resources": {
+        "heapUsedMb": 120.6414794921875,
+        "heapTotalMb": 151.7890625,
+        "externalMb": 17.23855209350586,
+        "rssMb": 242.69921875,
+        "arrayBuffersMb": 5.11851692199707
+      },
+      "detectionCount": 16,
+      "redactionCount": 16,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat5-payment-injection",
+      "category": 5,
+      "categoryName": "Prompt Injection Test Pages",
+      "strategy": "dom_gated_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 25,
+      "stages": {
+        "dom_extraction": 6.335339130435782,
+        "layer1_detection": 0.037795652173846735,
+        "layer2_detection": 0.41893913043468667,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.854130434781995,
+        "redaction": 0.04068260869557296,
+        "sanitized_context": 0.025795652173458264,
+        "structured_sanitized_context": 0.01816086956545326,
+        "end_to_end": 0.055956521738825475
+      },
+      "resources": {
+        "heapUsedMb": 123.8484878540039,
+        "heapTotalMb": 153.984375,
+        "externalMb": 17.35573959350586,
+        "rssMb": 243.69921875,
+        "arrayBuffersMb": 5.23570442199707
+      },
+      "detectionCount": 16,
+      "redactionCount": 16,
+      "visionGateInfo": {
+        "gateDecision": false,
+        "gateReason": "no_visual_content_requiring_inspection",
+        "visualRegionsCount": 0,
+        "signalsCount": 0
+      }
+    },
+    {
+      "sampleId": "cat6-account-settings-composite",
+      "category": 6,
+      "categoryName": "Mixed/Realistic Composite Pages",
+      "strategy": "dom_only",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 72,
+      "stages": {
+        "dom_extraction": 21.854978260869203,
+        "layer1_detection": 0.12529130434790126,
+        "layer2_detection": 0.462526086956527,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.3693130434781462,
+        "redaction": 0.06997826086966519,
+        "sanitized_context": 0.045160869565576,
+        "structured_sanitized_context": 0.04338695652104039,
+        "end_to_end": 0.10053478260875715
+      },
+      "resources": {
+        "heapUsedMb": 131.01090240478516,
+        "heapTotalMb": 157.6796875,
+        "externalMb": 17.472904205322266,
+        "rssMb": 249.07421875,
+        "arrayBuffersMb": 5.35289192199707
+      },
+      "detectionCount": 17,
+      "redactionCount": 17,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_present",
+        "visualRegionsCount": 2,
+        "signalsCount": 2
+      }
+    },
+    {
+      "sampleId": "cat6-account-settings-composite",
+      "category": 6,
+      "categoryName": "Mixed/Realistic Composite Pages",
+      "strategy": "unconditional_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 72,
+      "stages": {
+        "dom_extraction": 18.7736695652175,
+        "layer1_detection": 0.10927391304405477,
+        "layer2_detection": 0.5628130434784195,
+        "layer3_detection": 0,
+        "detection_pipeline": 2.033039130434665,
+        "redaction": 0.0554695652176831,
+        "sanitized_context": 0.044430434782755227,
+        "structured_sanitized_context": 0.04190434782598775,
+        "end_to_end": 0.09449130434728906
+      },
+      "resources": {
+        "heapUsedMb": 134.47809600830078,
+        "heapTotalMb": 161.0078125,
+        "externalMb": 17.590091705322266,
+        "rssMb": 252.5859375,
+        "arrayBuffersMb": 5.47007942199707
+      },
+      "detectionCount": 18,
+      "redactionCount": 19,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_present",
+        "visualRegionsCount": 2,
+        "signalsCount": 2
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat6-account-settings-composite",
+      "category": 6,
+      "categoryName": "Mixed/Realistic Composite Pages",
+      "strategy": "dom_gated_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 72,
+      "stages": {
+        "dom_extraction": 20.346643478261484,
+        "layer1_detection": 0.1459478260867004,
+        "layer2_detection": 0.5603260869570279,
+        "layer3_detection": 0,
+        "detection_pipeline": 2.4050130434786654,
+        "redaction": 0.06419999999991927,
+        "sanitized_context": 0.04239130434792099,
+        "structured_sanitized_context": 0.053508695652018774,
+        "end_to_end": 0.10204347826093789
+      },
+      "resources": {
+        "heapUsedMb": 137.77378845214844,
+        "heapTotalMb": 162.953125,
+        "externalMb": 17.707279205322266,
+        "rssMb": 255.140625,
+        "arrayBuffersMb": 5.58726692199707
+      },
+      "detectionCount": 18,
+      "redactionCount": 19,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_present",
+        "visualRegionsCount": 2,
+        "signalsCount": 2
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat6-signup-composite",
+      "category": 6,
+      "categoryName": "Mixed/Realistic Composite Pages",
+      "strategy": "dom_only",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 62,
+      "stages": {
+        "dom_extraction": 15.900391304347622,
+        "layer1_detection": 0.08970000000013185,
+        "layer2_detection": 0.404778260869732,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.347760869565125,
+        "redaction": 0.15006521739095383,
+        "sanitized_context": 0.05964347826058814,
+        "structured_sanitized_context": 0.041495652173540766,
+        "end_to_end": 0.0987956521737784
+      },
+      "resources": {
+        "heapUsedMb": 135.353515625,
+        "heapTotalMb": 165.6484375,
+        "externalMb": 17.824466705322266,
+        "rssMb": 256.6484375,
+        "arrayBuffersMb": 5.70445442199707
+      },
+      "detectionCount": 23,
+      "redactionCount": 23,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_present",
+        "visualRegionsCount": 2,
+        "signalsCount": 2
+      }
+    },
+    {
+      "sampleId": "cat6-signup-composite",
+      "category": 6,
+      "categoryName": "Mixed/Realistic Composite Pages",
+      "strategy": "unconditional_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 62,
+      "stages": {
+        "dom_extraction": 16.00021739130376,
+        "layer1_detection": 0.48046956521679735,
+        "layer2_detection": 0.43036956521720404,
+        "layer3_detection": 0,
+        "detection_pipeline": 2.217595652174287,
+        "redaction": 0.055417391304217745,
+        "sanitized_context": 0.042213043478430176,
+        "structured_sanitized_context": 0.03854782608734398,
+        "end_to_end": 0.09061739130423951
+      },
+      "resources": {
+        "heapUsedMb": 133.08289337158203,
+        "heapTotalMb": 168.34375,
+        "externalMb": 17.941654205322266,
+        "rssMb": 259.7421875,
+        "arrayBuffersMb": 5.82164192199707
+      },
+      "detectionCount": 24,
+      "redactionCount": 25,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_present",
+        "visualRegionsCount": 2,
+        "signalsCount": 2
+      },
+      "modelInferenceSuccess": true
+    },
+    {
+      "sampleId": "cat6-signup-composite",
+      "category": 6,
+      "categoryName": "Mixed/Realistic Composite Pages",
+      "strategy": "dom_gated_vision",
+      "visionExecutionMode": "heuristic_fallback",
+      "elementCount": 62,
+      "stages": {
+        "dom_extraction": 15.599582608695883,
+        "layer1_detection": 0.21573478260831072,
+        "layer2_detection": 0.585978260869445,
+        "layer3_detection": 0,
+        "detection_pipeline": 1.8536478260866716,
+        "redaction": 0.053047826087529996,
+        "sanitized_context": 0.03920434782586475,
+        "structured_sanitized_context": 0.036217391304924844,
+        "end_to_end": 0.08779565217422636
+      },
+      "resources": {
+        "heapUsedMb": 145.9229736328125,
+        "heapTotalMb": 170.2890625,
+        "externalMb": 18.058841705322266,
+        "rssMb": 261.25390625,
+        "arrayBuffersMb": 5.93882942199707
+      },
+      "detectionCount": 24,
+      "redactionCount": 25,
+      "visionGateInfo": {
+        "gateDecision": true,
+        "gateReason": "visual_content_present",
+        "visualRegionsCount": 2,
+        "signalsCount": 2
+      },
+      "modelInferenceSuccess": true
+    }
+  ],
+  "timestamp": "2026-09-28T20:44:33.416Z",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "nodeVersion": "v22.22.2",
+    "cpus": 4,
+    "totalMemoryGb": 9.94
+  }
+}

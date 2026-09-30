@@ -1,0 +1,18 @@
+SIH 26171 - Phase 9 Evaluation Results
+========================================
+
+Dataset Version: 1.0.0
+Timestamp: 2026-09-27T15:13:53.506Z
+Evaluator Version: 1.0.0
+
+Total Samples: 0
+Evaluated: 0
+Deferred: 0
+
+OVERALL METRICS (DOM-only, implemented capabilities):
+  PII Precision: 0.00%
+  PII Recall:    0.00%
+  PII F1:        0.00%
+  Redaction Precision: 100.00%
+
+CATEGORY BREAKDOWN:

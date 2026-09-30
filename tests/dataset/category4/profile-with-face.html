@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile with Face Photo</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 500px; margin: 2rem auto; padding: 1rem; }
+    .profile-card { border: 1px solid #ccc; border-radius: 8px; padding: 1.5rem; background: #fafafa; }
+    .avatar { width: 120px; height: 120px; border-radius: 50%; background: #e0e0e0; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid #ddd; }
+    .avatar svg { width: 100%; height: 100%; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+    input { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    button { width: 100%; padding: 0.75rem; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; }
+    button:hover { background: #0052a3; }
+    .legend { font-size: 0.75rem; color: #666; text-align: center; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+  <h1>Profile with Face Photo</h1>
+  <p>This page contains a profile photo (face) that should be detected by visual PII detection.</p>
+  
+  <div class="profile-card">
+    <div class="avatar" id="face-avatar">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Simple synthetic face -->
+        <circle cx="50" cy="50" r="45" fill="#ffdbac"/>
+        <!-- Eyes -->
+        <circle cx="35" cy="40" r="5" fill="#333"/>
+        <circle cx="65" cy="40" r="5" fill="#333"/>
+        <!-- Nose -->
+        <path d="M50,50 Q55,55 50,60" stroke="#333" stroke-width="2" fill="none"/>
+        <!-- Mouth -->
+        <path d="M35,70 Q50,80 65,70" stroke="#333" stroke-width="2" fill="none"/>
+      </svg>
+    </div>
+    <div class="legend">Synthetic face avatar (Layer 3 face detection target)</div>
+    
+    <form id="profile-form">
+      <div class="form-group">
+        <label for="display-name">Display Name</label>
+        <input type="text" id="display-name" name="displayName" autocomplete="name" placeholder="Enter display name" value="Test User">
+      </div>
+      <div class="form-group">
+        <label for="profile-email">Email</label>
+        <input type="email" id="profile-email" name="email" autocomplete="email" placeholder="user@example.test" value="profile@example.test">
+      </div>
+      <button type="submit" id="profile-submit">Save Profile</button>
+    </form>
+  </div>
+</body>
+</html>

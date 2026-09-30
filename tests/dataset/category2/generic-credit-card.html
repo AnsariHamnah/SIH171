@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generic Credit Card Input</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 400px; margin: 2rem auto; padding: 1rem; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+    input { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    .cc-hint { color: #666; font-size: 0.75rem; margin-top: 0.25rem; }
+    button { width: 100%; padding: 0.75rem; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; }
+    button:hover { background: #0052a3; }
+  </style>
+</head>
+<body>
+  <h1>Payment (Generic Inputs)</h1>
+  <p>This page uses generic text inputs for credit card data without proper autocomplete.</p>
+  <form id="generic-cc-form">
+    <div class="form-group">
+      <label for="name-on-card">Name on Card</label>
+      <input type="text" id="name-on-card" name="nameOnCard" placeholder="John Doe" value="John Doe">
+    </div>
+    <div class="form-group">
+      <label for="card-number">Card Number</label>
+      <input type="text" id="card-number" name="cardNumber" placeholder="1234 5678 9012 3456" value="4242 4242 4242 4242">
+      <div class="cc-hint">Enter 16-digit card number</div>
+    </div>
+    <div class="form-group">
+      <label for="expiry">Expiry Date</label>
+      <input type="text" id="expiry" name="expiry" placeholder="MM/YY" value="12/28">
+    </div>
+    <div class="form-group">
+      <label for="cvc">CVC</label>
+      <input type="text" id="cvc" name="cvc" placeholder="123" value="123">
+    </div>
+    <button type="submit" id="generic-pay">Pay</button>
+  </form>
+</body>
+</html>

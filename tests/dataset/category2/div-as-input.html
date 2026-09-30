@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Div Styled as Input</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 400px; margin: 2rem auto; padding: 1rem; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+    .fake-input { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; background: white; min-height: 38px; font-family: monospace; }
+    .fake-input:focus { outline: 2px solid #0066cc; }
+    .hidden-value { display: none; }
+    button { width: 100%; padding: 0.75rem; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; }
+    button:hover { background: #0052a3; }
+  </style>
+</head>
+<body>
+  <h1>Div as Input (ContentEditable)</h1>
+  <p>This page uses a contenteditable div styled to look like an input field.</p>
+  <form id="div-input-form">
+    <div class="form-group">
+      <label for="email-input">Email</label>
+      <input type="email" id="email-input" name="email" autocomplete="email" placeholder="user@example.test" value="user@example.test">
+    </div>
+    <div class="form-group">
+      <label for="ssn-display">SSN (editable div)</label>
+      <div class="fake-input" id="ssn-display" contenteditable="true" data-type="ssn" placeholder="XXX-XX-XXXX">123-45-6789</div>
+      <input type="hidden" id="ssn-hidden" name="ssn" value="123-45-6789" class="hidden-value">
+    </div>
+    <button type="submit" id="div-submit">Submit</button>
+  </form>
+</body>
+</html>

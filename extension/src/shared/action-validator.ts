@@ -57,10 +57,15 @@ function isElementSensitive(element: DOMElementMetadata): boolean {
 }
 
 function isElementInSensitiveForm(element: DOMElementMetadata, domElements: DOMElementMetadata[]): boolean {
-  if (!element.attributes.form) return false;
-  const formElement = domElements.find(e => e.attributes.id === element.attributes.form);
-  if (!formElement) return false;
-  return formElement.piiDetections.some(d => d.severity === 'critical' || d.severity === 'high');
+  if (!element.formId) return false;
+  // Check if any element in the same form has high/critical severity PII
+  const formElements = domElements.filter(e => e.formId === element.formId);
+  for (const formEl of formElements) {
+    if (formEl.piiDetections.some(d => d.severity === 'critical' || d.severity === 'high')) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function isElementInteractable(element: DOMElementMetadata): boolean {

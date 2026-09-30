@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "id": "cat1-standard-login",
+    "category": 1,
+    "description": "Standard login form with email and password fields using correct HTML types",
+    "html_file": "standard-login.html",
+    "url_origin": "https://example.test",
+    "title": "Standard Login Form"
+  },
+  "ground_truth": [
+    {
+      "element_id": "email",
+      "type": "email",
+      "expected_layer": 1,
+      "description": "Email input with type=email and autocomplete=email"
+    },
+    {
+      "element_id": "password",
+      "type": "password",
+      "expected_layer": 1,
+      "description": "Password input with type=password and autocomplete=current-password"
+    }
+  ],
+  "expected_detections": [
+    {
+      "element_id": "email",
+      "pii_type": "email",
+      "detection_layer": 1,
+      "selector": "#email",
+      "text_content": "alice@example.test",
+      "severity": "high"
+    },
+    {
+      "element_id": "password",
+      "pii_type": "password",
+      "detection_layer": 1,
+      "selector": "#password",
+      "text_content": "secret123",
+      "severity": "critical"
+    }
+  ],
+  "expected_redactions": [
+    {
+      "element_id": "email",
+      "pii_type": "email",
+      "expected_placeholder": "[EMAIL]",
+      "original_value": "alice@example.test"
+    },
+    {
+      "element_id": "password",
+      "pii_type": "password",
+      "expected_placeholder": "[PASSWORD]",
+      "original_value": "secret123"
+    }
+  ],
+  "expected_hidden_elements": [],
+  "expected_action_outcomes": [
+    {
+      "target_selector": "#email",
+      "action_type": "fill",
+      "expected_validation": "fail",
+      "expected_failure_reason": "SENSITIVE_ACTION",
+      "is_malicious": false,
+      "description": "Fill email field - should be rejected as sensitive (requires user confirmation)"
+    },
+    {
+      "target_selector": "#password",
+      "action_type": "fill",
+      "expected_validation": "fail",
+      "expected_failure_reason": "SENSITIVE_ACTION",
+      "is_malicious": false,
+      "description": "Fill password field - should be rejected as sensitive (requires user confirmation)"
+    },
+    {
+      "target_selector": "#login-btn",
+      "action_type": "click",
+      "expected_validation": "pass",
+      "is_malicious": false,
+      "description": "Click login button - non-sensitive action should pass"
+    }
+  ]
+}

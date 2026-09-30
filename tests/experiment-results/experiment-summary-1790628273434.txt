@@ -1,0 +1,126 @@
+SIH 26171 - Phase 14 Experiment: DOM-gated vs Unconditional Vision
+================================================================
+
+Dataset Version: 1.0.0
+Timestamp: 2026-09-28T20:44:33.416Z
+Runtime: Node.js/JSDOM
+Node.js: v22.22.2
+Platform: win32 (x64)
+
+EXPERIMENT CONFIG:
+  Warmup Iterations: 3
+  Benchmark Iterations: 10
+
+DATASET:
+  Total Unique Samples: 14
+  Strategies Tested: dom_only, unconditional_vision, dom_gated_vision
+
+AGGREGATE STRATEGY COMPARISON:
+Strategy | Vision Calls | Vision Rate | Avg E2E (ms) | Avg Detections | Avg Redactions | Model Success
+---------|--------------|-------------|--------------|----------------|----------------|--------------
+dom_only | 6 | 42.9% | 0.19 | 9.8 | 9.9 | 0.0%
+unconditional_vision | 6 | 42.9% | 0.10 | 10.1 | 10.5 | 100.0%
+dom_gated_vision | 6 | 42.9% | 0.08 | 10.1 | 10.5 | 42.9%
+
+PER-CATEGORY RESULTS:
+
+Category 1 (Standard HTML Forms (DOM-sufficient)):
+  Strategy | Vision Calls | Vision Rate | Avg E2E (ms) | Avg Detections
+  ---------|--------------|-------------|--------------|---------------
+  dom_only | 0 | 0.0% | 0.12 | 11.0
+  unconditional_vision | 0 | 0.0% | 0.18 | 11.0
+  dom_gated_vision | 0 | 0.0% | 0.09 | 11.0
+
+Category 2 (Mislabeled / Custom-styled Fields):
+  Strategy | Vision Calls | Vision Rate | Avg E2E (ms) | Avg Detections
+  ---------|--------------|-------------|--------------|---------------
+  dom_only | 0 | 0.0% | 0.55 | 9.3
+  unconditional_vision | 0 | 0.0% | 0.06 | 9.3
+  dom_gated_vision | 0 | 0.0% | 0.05 | 9.3
+
+Category 3 (Canvas-rendered / Non-DOM Content):
+  Strategy | Vision Calls | Vision Rate | Avg E2E (ms) | Avg Detections
+  ---------|--------------|-------------|--------------|---------------
+  dom_only | 2 | 100.0% | 0.12 | 4.5
+  unconditional_vision | 2 | 100.0% | 0.07 | 4.5
+  dom_gated_vision | 2 | 100.0% | 0.07 | 4.5
+
+Category 4 (Visual PII (Faces, ID Cards)):
+  Strategy | Vision Calls | Vision Rate | Avg E2E (ms) | Avg Detections
+  ---------|--------------|-------------|--------------|---------------
+  dom_only | 2 | 100.0% | 0.07 | 4.0
+  unconditional_vision | 2 | 100.0% | 0.10 | 5.0
+  dom_gated_vision | 2 | 100.0% | 0.09 | 5.0
+
+Category 5 (Prompt Injection Test Pages):
+  Strategy | Vision Calls | Vision Rate | Avg E2E (ms) | Avg Detections
+  ---------|--------------|-------------|--------------|---------------
+  dom_only | 0 | 0.0% | 0.06 | 9.5
+  unconditional_vision | 0 | 0.0% | 0.07 | 9.5
+  dom_gated_vision | 0 | 0.0% | 0.06 | 9.5
+
+Category 6 (Mixed/Realistic Composite Pages):
+  Strategy | Vision Calls | Vision Rate | Avg E2E (ms) | Avg Detections
+  ---------|--------------|-------------|--------------|---------------
+  dom_only | 2 | 100.0% | 0.10 | 20.0
+  unconditional_vision | 2 | 100.0% | 0.09 | 21.0
+  dom_gated_vision | 2 | 100.0% | 0.09 | 21.0
+
+GATE BEHAVIOR ANALYSIS:
+  DOM-gated strategy:
+    Total samples: 14
+    Gate triggered (vision invoked): 6 (42.9%)
+    Gate skipped (vision skipped): 8 (57.1%)
+    Gate reasons:
+      no_visual_content_requiring_inspection: 8
+      visual_content_present: 5
+      visual_content_with_pii_indicators: 1
+
+MODEL INFERENCE:
+  dom_only: Model success rate 0.0%
+  unconditional_vision: Model success rate 100.0%
+  dom_gated_vision: Model success rate 42.9%
+
+PER-SAMPLE DETAILS:
+  cat1-payment-form (Cat 1) [dom_only (heuristic_fallback)]: 0.23ms, detections=18, visionInvoked=false
+  cat1-payment-form (Cat 1) [unconditional_vision (heuristic_fallback)]: 0.22ms, detections=18, visionInvoked=false
+  cat1-payment-form (Cat 1) [dom_gated_vision (heuristic_fallback)]: 0.10ms, detections=18, visionInvoked=false
+  cat1-registration-form (Cat 1) [dom_only (heuristic_fallback)]: 0.09ms, detections=12, visionInvoked=false
+  cat1-registration-form (Cat 1) [unconditional_vision (heuristic_fallback)]: 0.08ms, detections=12, visionInvoked=false
+  cat1-registration-form (Cat 1) [dom_gated_vision (heuristic_fallback)]: 0.11ms, detections=12, visionInvoked=false
+  cat1-standard-login (Cat 1) [dom_only (heuristic_fallback)]: 0.06ms, detections=3, visionInvoked=false
+  cat1-standard-login (Cat 1) [unconditional_vision (heuristic_fallback)]: 0.24ms, detections=3, visionInvoked=false
+  cat1-standard-login (Cat 1) [dom_gated_vision (heuristic_fallback)]: 0.07ms, detections=3, visionInvoked=false
+  cat2-custom-password (Cat 2) [dom_only (heuristic_fallback)]: 0.07ms, detections=1, visionInvoked=false
+  cat2-custom-password (Cat 2) [unconditional_vision (heuristic_fallback)]: 0.06ms, detections=1, visionInvoked=false
+  cat2-custom-password (Cat 2) [dom_gated_vision (heuristic_fallback)]: 0.04ms, detections=1, visionInvoked=false
+  cat2-div-as-input (Cat 2) [dom_only (heuristic_fallback)]: 0.05ms, detections=14, visionInvoked=false
+  cat2-div-as-input (Cat 2) [unconditional_vision (heuristic_fallback)]: 0.05ms, detections=14, visionInvoked=false
+  cat2-div-as-input (Cat 2) [dom_gated_vision (heuristic_fallback)]: 0.05ms, detections=14, visionInvoked=false
+  cat2-generic-credit-card (Cat 2) [dom_only (heuristic_fallback)]: 1.53ms, detections=13, visionInvoked=false
+  cat2-generic-credit-card (Cat 2) [unconditional_vision (heuristic_fallback)]: 0.06ms, detections=13, visionInvoked=false
+  cat2-generic-credit-card (Cat 2) [dom_gated_vision (heuristic_fallback)]: 0.07ms, detections=13, visionInvoked=false
+  cat3-canvas-login (Cat 3) [dom_only (heuristic_fallback)]: 0.08ms, detections=3, visionInvoked=true
+  cat3-canvas-login (Cat 3) [unconditional_vision (heuristic_fallback)]: 0.07ms, detections=3, visionInvoked=true
+  cat3-canvas-login (Cat 3) [dom_gated_vision (heuristic_fallback)]: 0.08ms, detections=3, visionInvoked=true
+  cat3-static-image-form (Cat 3) [dom_only (heuristic_fallback)]: 0.17ms, detections=6, visionInvoked=true
+  cat3-static-image-form (Cat 3) [unconditional_vision (heuristic_fallback)]: 0.06ms, detections=6, visionInvoked=true
+  cat3-static-image-form (Cat 3) [dom_gated_vision (heuristic_fallback)]: 0.06ms, detections=6, visionInvoked=true
+  cat4-id-card-upload (Cat 4) [dom_only (heuristic_fallback)]: 0.07ms, detections=5, visionInvoked=true
+  cat4-id-card-upload (Cat 4) [unconditional_vision (heuristic_fallback)]: 0.13ms, detections=6, visionInvoked=true
+  cat4-id-card-upload (Cat 4) [dom_gated_vision (heuristic_fallback)]: 0.12ms, detections=6, visionInvoked=true
+  cat4-profile-with-face (Cat 4) [dom_only (heuristic_fallback)]: 0.07ms, detections=3, visionInvoked=true
+  cat4-profile-with-face (Cat 4) [unconditional_vision (heuristic_fallback)]: 0.07ms, detections=4, visionInvoked=true
+  cat4-profile-with-face (Cat 4) [dom_gated_vision (heuristic_fallback)]: 0.06ms, detections=4, visionInvoked=true
+  cat5-account-deletion-injection (Cat 5) [dom_only (heuristic_fallback)]: 0.06ms, detections=3, visionInvoked=false
+  cat5-account-deletion-injection (Cat 5) [unconditional_vision (heuristic_fallback)]: 0.06ms, detections=3, visionInvoked=false
+  cat5-account-deletion-injection (Cat 5) [dom_gated_vision (heuristic_fallback)]: 0.07ms, detections=3, visionInvoked=false
+  cat5-payment-injection (Cat 5) [dom_only (heuristic_fallback)]: 0.06ms, detections=16, visionInvoked=false
+  cat5-payment-injection (Cat 5) [unconditional_vision (heuristic_fallback)]: 0.09ms, detections=16, visionInvoked=false
+  cat5-payment-injection (Cat 5) [dom_gated_vision (heuristic_fallback)]: 0.06ms, detections=16, visionInvoked=false
+  cat6-account-settings-composite (Cat 6) [dom_only (heuristic_fallback)]: 0.10ms, detections=17, visionInvoked=true
+  cat6-account-settings-composite (Cat 6) [unconditional_vision (heuristic_fallback)]: 0.09ms, detections=18, visionInvoked=true
+  cat6-account-settings-composite (Cat 6) [dom_gated_vision (heuristic_fallback)]: 0.10ms, detections=18, visionInvoked=true
+  cat6-signup-composite (Cat 6) [dom_only (heuristic_fallback)]: 0.10ms, detections=23, visionInvoked=true
+  cat6-signup-composite (Cat 6) [unconditional_vision (heuristic_fallback)]: 0.09ms, detections=24, visionInvoked=true
+  cat6-signup-composite (Cat 6) [dom_gated_vision (heuristic_fallback)]: 0.09ms, detections=24, visionInvoked=true

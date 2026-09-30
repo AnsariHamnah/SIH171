@@ -38,6 +38,7 @@ export interface DOMElementMetadata {
   isInteractive: boolean;
   isVisible: boolean;
   piiDetections: PIIDetection[];
+  formId: string | null;
 }
 
 export interface VisualRegionMetadata {

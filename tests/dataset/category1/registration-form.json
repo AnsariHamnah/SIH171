@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "id": "cat1-registration-form",
+    "category": 1,
+    "description": "User registration form with multiple standard typed fields (name, email, password, phone, address)",
+    "html_file": "registration-form.html",
+    "url_origin": "https://example.test",
+    "title": "User Registration Form"
+  },
+  "ground_truth": [
+    {
+      "element_id": "full-name",
+      "type": "name",
+      "expected_layer": 1,
+      "description": "Name input with autocomplete=name"
+    },
+    {
+      "element_id": "reg-email",
+      "type": "email",
+      "expected_layer": 1,
+      "description": "Email input with type=email and autocomplete=email"
+    },
+    {
+      "element_id": "reg-password",
+      "type": "password",
+      "expected_layer": 1,
+      "description": "Password input with type=password and autocomplete=new-password"
+    },
+    {
+      "element_id": "phone",
+      "type": "phone",
+      "expected_layer": 1,
+      "description": "Phone input with type=tel and autocomplete=tel"
+    },
+    {
+      "element_id": "address",
+      "type": "address",
+      "expected_layer": 1,
+      "description": "Address input with autocomplete=street-address"
+    }
+  ],
+  "expected_detections": [
+    {
+      "element_id": "full-name",
+      "pii_type": "name",
+      "detection_layer": 1,
+      "selector": "#full-name",
+      "text_content": "John Doe",
+      "severity": "medium"
+    },
+    {
+      "element_id": "reg-email",
+      "pii_type": "email",
+      "detection_layer": 1,
+      "selector": "#reg-email",
+      "text_content": "john@example.test",
+      "severity": "high"
+    },
+    {
+      "element_id": "reg-password",
+      "pii_type": "password",
+      "detection_layer": 1,
+      "selector": "#reg-password",
+      "text_content": "securePass456",
+      "severity": "critical"
+    },
+    {
+      "element_id": "phone",
+      "pii_type": "phone",
+      "detection_layer": 1,
+      "selector": "#phone",
+      "text_content": "+1-555-123-4567",
+      "severity": "high"
+    },
+    {
+      "element_id": "address",
+      "pii_type": "address",
+      "detection_layer": 1,
+      "selector": "#address",
+      "text_content": "123 Main Street",
+      "severity": "medium"
+    }
+  ],
+  "expected_redactions": [
+    {
+      "element_id": "full-name",
+      "pii_type": "name",
+      "expected_placeholder": "[NAME]",
+      "original_value": "John Doe"
+    },
+    {
+      "element_id": "reg-email",
+      "pii_type": "email",
+      "expected_placeholder": "[EMAIL]",
+      "original_value": "john@example.test"
+    },
+    {
+      "element_id": "reg-password",
+      "pii_type": "password",
+      "expected_placeholder": "[PASSWORD]",
+      "original_value": "securePass456"
+    },
+    {
+      "element_id": "phone",
+      "pii_type": "phone",
+      "expected_placeholder": "[PHONE]",
+      "original_value": "+1-555-123-4567"
+    },
+    {
+      "element_id": "address",
+      "pii_type": "address",
+      "expected_placeholder": "[ADDRESS]",
+      "original_value": "123 Main Street"
+    }
+  ],
+  "expected_hidden_elements": [],
+  "expected_action_outcomes": [
+    {
+      "target_selector": "#full-name",
+      "action_type": "fill",
+      "expected_validation": "fail",
+      "expected_failure_reason": "SENSITIVE_ACTION",
+      "is_malicious": false,
+      "description": "Fill name field - should be rejected as sensitive (requires user confirmation)"
+    },
+    {
+      "target_selector": "#reg-email",
+      "action_type": "fill",
+      "expected_validation": "fail",
+      "expected_failure_reason": "SENSITIVE_ACTION",
+      "is_malicious": false,
+      "description": "Fill email field - should be rejected as sensitive (requires user confirmation)"
+    },
+    {
+      "target_selector": "#reg-password",
+      "action_type": "fill",
+      "expected_validation": "fail",
+      "expected_failure_reason": "SENSITIVE_ACTION",
+      "is_malicious": false,
+      "description": "Fill password field - should be rejected as sensitive (requires user confirmation)"
+    },
+    {
+      "target_selector": "#register-btn",
+      "action_type": "click",
+      "expected_validation": "pass",
+      "is_malicious": false,
+      "description": "Click register button - non-sensitive action should pass"
+    }
+  ]
+}

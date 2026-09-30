@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIH 26171 - Phase 15 Experiment: WebGPU + WASM Fallback</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 1200px; margin: 2rem auto; padding: 1rem; }
+    .test-section { margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; }
+    .status { padding: 0.5rem; border-radius: 4px; margin: 0.5rem 0; }
+    .status.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .status.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    .status.info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+    .status.warning { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+    pre { background: #f5f5f5; padding: 1rem; border-radius: 4px; overflow-x: auto; max-height: 300px; overflow-y: auto; font-size: 0.8rem; }
+    button { padding: 0.75rem 1.5rem; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; margin: 0.5rem 0.5rem 0.5rem 0; }
+    button:disabled { background: #999; cursor: not-allowed; }
+    button:hover:not(:disabled) { background: #0052a3; }
+    button.secondary { background: #6c757d; }
+    button.secondary:hover:not(:disabled) { background: #5a6268; }
+    button.danger { background: #dc3545; }
+    button.danger:hover:not(:disabled) { background: #c82333; }
+    .test-image { border: 1px solid #ccc; max-width: 100%; margin: 1rem 0; }
+    #log { font-family: monospace; font-size: 0.875rem; }
+    .model-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0; }
+    .model-info-item { padding: 0.5rem; background: #f8f9fa; border-radius: 4px; }
+    .model-info-label { font-weight: bold; color: #333; }
+    .model-info-value { color: #666; }
+    .strategy-btn { margin: 0.25rem; padding: 0.5rem 1rem; font-size: 0.9rem; }
+    .strategy-btn.active { background: #28a745; }
+    .backend-btn { margin: 0.25rem; padding: 0.5rem 1rem; font-size: 0.9rem; }
+    .backend-btn.active { background: #17a2b8; }
+    .results-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+    .results-table th, .results-table td { border: 1px solid #ddd; padding: 0.5rem; text-align: left; }
+    .results-table th { background: #f8f9fa; }
+    .results-table tr:nth-child(even) { background: #f8f9fa; }
+    .progress-bar { width: 100%; height: 20px; background: #e9ecef; border-radius: 4px; overflow: hidden; margin: 0.5rem 0; }
+    .progress-fill { height: 100%; background: #0066cc; transition: width 0.3s; }
+    .sample-selector { margin: 1rem 0; }
+    .sample-selector select { padding: 0.5rem; font-size: 1rem; margin-right: 1rem; }
+    .category-badge { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-right: 0.5rem; }
+    .cat1 { background: #d4edda; color: #155724; }
+    .cat2 { background: #fff3cd; color: #856404; }
+    .cat3 { background: #f8d7da; color: #721c24; }
+    .cat4 { background: #cce5ff; color: #004085; }
+    .cat5 { background: #e2d9f3; color: #5a32a3; }
+    .cat6 { background: #d1ecf1; color: #0c5460; }
+    .backend-badge { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-right: 0.5rem; }
+    .backend-webgpu { background: #cce5ff; color: #004085; }
+    .backend-wasm { background: #d4edda; color: #155724; }
+    .backend-fallback { background: #fff3cd; color: #856404; }
+  </style>
+</head>
+<body>
+  <h1>Phase 15 Experiment: WebGPU + WASM Fallback</h1>
+  <p>This experiment compares three strategies for visual inference invocation across the synthetic dataset with WebGPU/WASM backend selection.</p>
+  <p><strong>Strategies:</strong> DOM-only (no vision) | Unconditional Vision (always vision) | DOM-Gated Vision (gate decides)</p>
+  <p><strong>Backends:</strong> Auto (WebGPU if available, otherwise WASM) | WebGPU (explicit) | WASM (explicit)</p>
+
+  <div class="test-section">
+    <h2>1. Model Information</h2>
+    <div class="model-info" id="modelInfo"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>2. Backend Selection</h2>
+    <div id="backendButtons">
+      <button class="backend-btn active" data-backend="local_model_auto" onclick="selectBackend('local_model_auto')">Auto (WebGPU → WASM)</button>
+      <button class="backend-btn" data-backend="local_model_webgpu" onclick="selectBackend('local_model_webgpu')">WebGPU</button>
+      <button class="backend-btn" data-backend="local_model_wasm" onclick="selectBackend('local_model_wasm')">WASM</button>
+    </div>
+    <p>Selected: <strong id="selectedBackend">local_model_auto</strong></p>
+    <div id="webgpuStatus"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>3. Model Loading</h2>
+    <button id="loadModelBtn" onclick="loadModel()">Load BlazeFace Model</button>
+    <div id="loadModelStatus"></div>
+    <pre id="loadModelLog"></pre>
+  </div>
+
+  <div class="test-section">
+    <h2>4. Dataset Selection</h2>
+    <div class="sample-selector">
+      <label for="categorySelect">Category: </label>
+      <select id="categorySelect" onchange="loadCategory()">
+        <option value="1">Category 1 - Standard HTML Forms (DOM-sufficient)</option>
+        <option value="2">Category 2 - Mislabeled / Custom-styled Fields</option>
+        <option value="3">Category 3 - Canvas-rendered / Non-DOM Content</option>
+        <option value="4">Category 4 - Visual PII (Faces, ID Cards)</option>
+        <option value="5">Category 5 - Prompt Injection Test Pages</option>
+        <option value="6"> Category 6 - Mixed/Realistic Composite Pages</option>
+      </select>
+      <label for="sampleSelect">Sample: </label>
+      <select id="sampleSelect" onchange="loadSample()"></select>
+    </div>
+    <div id="sampleInfo"></div>
+    <iframe id="sampleFrame" style="width: 100%; height: 400px; border: 1px solid #ccc; display: none;"></iframe>
+  </div>
+
+  <div class="test-section">
+    <h2>5. Strategy Selection</h2>
+    <div id="strategyButtons">
+      <button class="strategy-btn active" data-strategy="dom_only" onclick="selectStrategy('dom_only')">DOM-only</button>
+      <button class="strategy-btn" data-strategy="unconditional_vision" onclick="selectStrategy('unconditional_vision')">Unconditional Vision</button>
+      <button class="strategy-btn" data-strategy="dom_gated_vision" onclick="selectStrategy('dom_gated_vision')">DOM-Gated Vision</button>
+    </div>
+    <p>Selected: <strong id="selectedStrategy">dom_only</strong></p>
+  </div>
+
+  <div class="test-section">
+    <h2>6. Run Experiment</h2>
+    <button id="runExperimentBtn" onclick="runExperiment()" disabled>Run Single Experiment</button>
+    <button id="runAllBtn" class="secondary" onclick="runAllSamples()" disabled>Run All Samples in Category</button>
+    <button id="runFullExperimentBtn" class="danger" onclick="runFullExperiment()" disabled>Run Full Experiment (All Categories)</button>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+    <div id="experimentStatus"></div>
+    <pre id="experimentLog"></pre>
+  </div>
+
+  <div class="test-section">
+    <h2>7. Results</h2>
+    <button id="downloadResultsBtn" class="secondary" onclick="downloadResults()" disabled>Download Results (JSON)</button>
+    <button id="downloadSummaryBtn" class="secondary" onclick="downloadSummary()" disabled>Download Summary (Text)</button>
+    <div id="resultsTable"></div>
+    <pre id="resultsLog"></pre>
+  </div>
+
+  <script type="module">
+    import { LocalVisionModel, ModelState, BackendSelectionMode } from './shared/local-vision-model.js';
+    import { evaluateVisionGate } from './shared/vision-gate.js';
+    import { detectLayer3Async, detectLayer3AsyncForExperiment } from './shared/layer3-visual-detector.js';
+    import { detectLayer1 } from './shared/layer1-detector.js';
+    import { detectLayer2 } from './shared/layer2-detector.js';
+    import { extractDOMElements } from './shared/dom-extraction.js';
+    import { buildSanitizedContext, buildStructuredSanitizedContext, validateSanitizedContext } from './shared/sanitized-context.js';
+    import { toDOMElementMetadata, groupDetectionsByElement } from './shared/dom-extraction.js';
+    import { getDataset, loadSampleHTML } from '../tests/dataset/index.js';
+
+    let localVisionModel = null;
+    let dataset = null;
+    let currentCategory = 1;
+    let currentSample = null;
+    let selectedStrategy = 'dom_only';
+    let selectedBackend: BackendSelectionMode = 'auto';
+    let experimentResults = [];
+
+    const CATEGORY_NAMES = {
+      1: 'Standard HTML Forms (DOM-sufficient)',
+      2: 'Mislabeled / Custom-styled Fields',
+      3: 'Canvas-rendered / Non-DOM Content',
+      4: 'Visual PII (Faces, ID Cards)',
+      5: 'Prompt Injection Test Pages',
+      6: 'Mixed/Realistic Composite Pages'
+    };
+
+    const CATEGORY_CLASSES = { 1: 'cat1', 2: 'cat2', 3: 'cat3', 4: 'cat4', 5: 'cat5', 6: 'cat6' };
+
+    function log(elementId, message) {
+      const el = document.getElementById(elementId);
+      const timestamp = new Date().toISOString().split('T')[1].split('.')[0];
+      el.textContent += `[${timestamp}] ${message}\n`;
+      el.scrollTop = el.scrollHeight;
+    }
+
+    function setStatus(elementId, message, type = 'info') {
+      const el = document.getElementById(elementId);
+      el.innerHTML = `<div class="status ${type}">${message}</div>`;
+    }
+
+    function selectStrategy(strategy) {
+      selectedStrategy = strategy;
+      document.getElementById('selectedStrategy').textContent = strategy;
+      document.querySelectorAll('.strategy-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.strategy === strategy);
+      });
+    }
+
+    function selectBackend(backend: BackendSelectionMode) {
+      selectedBackend = backend;
+      document.getElementById('selectedBackend').textContent = backend;
+      document.querySelectorAll('.backend-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.backend === backend);
+      });
+    }
+
+    async function loadModel() {
+      const btn = document.getElementById('loadModelBtn');
+      btn.disabled = true;
+      setStatus('loadModelStatus', 'Loading model...', 'info');
+      log('loadModelLog', 'Initializing LocalVisionModel...');
+
+      try {
+        localVisionModel = new LocalVisionModel({ backendMode: selectedBackend });
+        log('loadModelLog', 'Model config: ' + JSON.stringify(localVisionModel.getConfig(), null, 2));
+        log('loadModelLog', 'Model info: ' + JSON.stringify(localVisionModel.getModelInfo(), null, 2));
+
+        const info = localVisionModel.getModelInfo();
+        const infoEl = document.getElementById('modelInfo');
+        infoEl.innerHTML = Object.entries(info).map(([key, value]) =>
+          `<div class="model-info-item"><span class="model-info-label">${key}:</span> <span class="model-info-value">${value}</span></div>`
+        ).join('');
+
+        await localVisionModel.initialize();
+
+        const modelStatus = localVisionModel.getModelStatus();
+        const webgpuStatusEl = document.getElementById('webgpuStatus');
+        let webgpuStatusHtml = '';
+        if (modelStatus.webgpuAvailable) {
+          webgpuStatusHtml = '<span class="backend-badge backend-webgpu">WebGPU Available</span>';
+          if (modelStatus.webgpuInitializationSuccess) {
+            webgpuStatusHtml += ' <span class="backend-badge backend-webgpu">WebGPU Initialized</span>';
+          } else {
+            webgpuStatusHtml += ' <span class="backend-badge backend-fallback">WebGPU Init Failed → WASM Fallback</span>';
+            if (modelStatus.fallbackReason) {
+              webgpuStatusHtml += ` (Reason: ${modelStatus.fallbackReason})`;
+            }
+          }
+        } else {
+          webgpuStatusHtml = '<span class="backend-badge backend-wasm">WebGPU Unavailable → WASM</span>';
+        }
+        webgpuStatusEl.innerHTML = `WebGPU Status: ${webgpuStatusHtml}`;
+
+        if (localVisionModel.getState() === ModelState.READY) {
+          setStatus('loadModelStatus', `Model loaded successfully! State: MODEL_READY, Backend: ${modelStatus.backend}`, 'success');
+          log('loadModelLog', `Model initialization complete. Backend: ${modelStatus.backend}, Init time: ${modelStatus.initializationTimeMs?.toFixed(2)}ms`);
+          if (modelStatus.wasmFallback) {
+            log('loadModelLog', `WASM Fallback: ${modelStatus.fallbackReason}`);
+          }
+          document.getElementById('runExperimentBtn').disabled = false;
+          document.getElementById('runAllBtn').disabled = false;
+          document.getElementById('runFullExperimentBtn').disabled = false;
+        } else {
+          setStatus('loadModelStatus', 'Model failed to load. State: ' + localVisionModel.getState(), 'error');
+        }
+      } catch (error) {
+        setStatus('loadModelStatus', 'Error loading model: ' + error.message, 'error');
+        log('loadModelLog', 'ERROR: ' + error.stack);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function loadDataset() {
+      log('experimentLog', 'Loading dataset...');
+      dataset = getDataset();
+      log('experimentLog', 'Dataset loaded: ' + dataset.version + ', ' + dataset.samples.length + ' samples');
+      loadCategory();
+    }
+
+    function loadCategory() {
+      currentCategory = parseInt(document.getElementById('categorySelect').value);
+      const categorySamples = dataset.samples.filter(s => s.metadata.category === currentCategory);
+      const select = document.getElementById('sampleSelect');
+      select.innerHTML = categorySamples.map(s => 
+        `<option value="${s.metadata.id}">${s.metadata.id}</option>`
+      ).join('');
+      if (categorySamples.length > 0) {
+        select.value = categorySamples[0].metadata.id;
+        loadSample();
+      }
+    }
+
+    function loadSample() {
+      const sampleId = document.getElementById('sampleSelect').value;
+      currentSample = dataset.samples.find(s => s.metadata.id === sampleId);
+      if (!currentSample) return;
+
+      const html = loadSampleHTML(currentSample.metadata.category, sampleId.replace('cat' + currentSample.metadata.category + '-', ''));
+      if (!html) {
+        setStatus('experimentStatus', 'Failed to load sample HTML', 'error');
+        return;
+      }
+
+      const frame = document.getElementById('sampleFrame');
+      frame.style.display = 'block';
+      frame.srcdoc = html;
+
+      const info = document.getElementById('sampleInfo');
+      info.innerHTML = `
+        <span class="category-badge ${CATEGORY_CLASSES[currentCategory]}">Category ${currentCategory}</span>
+        <strong>${currentSample.metadata.id}</strong>: ${currentSample.metadata.description}<br>
+        Origin: ${currentSample.metadata.url_origin}<br>
+        Ground truth: ${currentSample.ground_truth.length} annotations
+      `;
+      log('experimentLog', 'Loaded sample: ' + currentSample.metadata.id);
+    }
+
+    async function runSingleExperiment(sample, strategy, backend) {
+      const html = loadSampleHTML(sample.metadata.category, sample.metadata.id.replace('cat' + sample.metadata.category + '-', ''));
+      if (!html) throw new Error('Failed to load HTML');
+
+      const frame = document.getElementById('sampleFrame');
+      frame.srcdoc = html;
+      await new Promise(resolve => { frame.onload = resolve; });
+
+      const frameDoc = frame.contentDocument || frame.contentWindow.document;
+      const elements = extractDOMElements(frameDoc);
+
+      const config = { strategy, visionExecutionMode: backend };
+      const start = performance.now();
+      const result = await runStrategyInBrowser(elements, config);
+      const duration = performance.now() - start;
+
+      return { ...result, duration, sampleId: sample.metadata.id, category: sample.metadata.category };
+    }
+
+    async function runStrategyInBrowser(extractedElements, config) {
+      const layer1Result = detectLayer1(extractedElements);
+      const layer2Result = detectLayer2(extractedElements);
+
+      let layer3Result = { detections: [] };
+      let visionGateInfo;
+      let modelInferenceResult;
+
+      switch (config.strategy) {
+        case 'dom_only': {
+          visionGateInfo = { decision: { shouldRunVision: false, reason: 'dom_only_strategy', signals: [], visualRegionsCount: 0, timestamp: Date.now() }, visionInvoked: false, visionSkipped: true };
+          modelInferenceResult = undefined;
+          break;
+        }
+        case 'unconditional_vision': {
+          const gateDecision = evaluateVisionGate(extractedElements);
+          const inferenceResult = await detectLayer3AsyncForExperiment(extractedElements, {}, config.visionExecutionMode === 'local_model_auto' ? 'auto' : config.visionExecutionMode === 'local_model_webgpu' ? 'webgpu' : 'wasm');
+          layer3Result = { detections: inferenceResult.detections };
+          modelInferenceResult = inferenceResult;
+          visionGateInfo = { decision: gateDecision, visionInvoked: true, visionSkipped: false };
+          break;
+        }
+        case 'dom_gated_vision': {
+          const gateDecision = evaluateVisionGate(extractedElements);
+          if (gateDecision.shouldRunVision) {
+            const inferenceResult = await detectLayer3AsyncForExperiment(extractedElements, {}, config.visionExecutionMode === 'local_model_auto' ? 'auto' : config.visionExecutionMode === 'local_model_webgpu' ? 'webgpu' : 'wasm');
+            layer3Result = { detections: inferenceResult.detections };
+            modelInferenceResult = inferenceResult;
+            visionGateInfo = { decision: gateDecision, visionInvoked: true, visionSkipped: false };
+          } else {
+            layer3Result = { detections: [] };
+            visionGateInfo = { decision: gateDecision, visionInvoked: false, visionSkipped: true };
+            modelInferenceResult = undefined;
+          }
+          break;
+        }
+      }
+
+      const allDetections = [...layer1Result.detections, ...layer2Result.detections, ...layer3Result.detections];
+      const detectionsMap = groupDetectionsByElement(extractedElements, allDetections);
+      const domElements = extractedElements.map(el => toDOMElementMetadata(el, detectionsMap.get(el.element) || []));
+      const sanitizedContext = buildSanitizedContext(domElements, window.location.origin);
+      const structuredContext = buildStructuredSanitizedContext(domElements, window.location.origin, document.title);
+      validateSanitizedContext(sanitizedContext);
+
+      return { strategy: config.strategy, detections: allDetections, visionGateInfo, modelInferenceResult, sanitizedContext, structuredContext };
+    }
+
+    async function runExperiment() {
+      if (!currentSample) return;
+      if (!localVisionModel || localVisionModel.getState() !== ModelState.READY) {
+        setStatus('experimentStatus', 'Model not loaded', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('runExperimentBtn');
+      btn.disabled = true;
+      setStatus('experimentStatus', 'Running experiment...', 'info');
+
+      try {
+        const result = await runSingleExperiment(currentSample, selectedStrategy, selectedBackend);
+        experimentResults.push(result);
+        displayResult(result);
+        setStatus('experimentStatus', 'Experiment completed: ' + result.duration.toFixed(2) + 'ms', 'success');
+      } catch (error) {
+        setStatus('experimentStatus', 'Experiment failed: ' + error.message, 'error');
+        log('experimentLog', 'ERROR: ' + error.stack);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function runAllSamples() {
+      if (!dataset) return;
+      if (!localVisionModel || localVisionModel.getState() !== ModelState.READY) {
+        setStatus('experimentStatus', 'Model not loaded', 'error');
+        return;
+      }
+
+      const categorySamples = dataset.samples.filter(s => s.metadata.category === currentCategory);
+      const btn = document.getElementById('runAllBtn');
+      btn.disabled = true;
+      setStatus('experimentStatus', 'Running all samples in category...', 'info');
+      document.getElementById('progressFill').style.width = '0%';
+
+      try {
+        for (let i = 0; i < categorySamples.length; i++) {
+          const sample = categorySamples[i];
+          for (const strategy of ['dom_only', 'unconditional_vision', 'dom_gated_vision']) {
+            const result = await runSingleExperiment(sample, strategy, selectedBackend);
+            experimentResults.push(result);
+            const backendInfo = result.modelInferenceResult?.backend ?? 'N/A';
+            const fallbackInfo = result.modelInferenceResult?.wasmFallback ? ' (WASM fallback)' : '';
+            log('experimentLog', `${sample.metadata.id} [${strategy}/${backendInfo}${fallbackInfo}]: ${result.duration.toFixed(2)}ms, visionInvoked=${result.visionGateInfo.visionInvoked}, detections=${result.detections.length}`);
+          }
+          const progress = ((i + 1) / categorySamples.length) * 100;
+          document.getElementById('progressFill').style.width = progress + '%';
+        }
+        setStatus('experimentStatus', 'Category experiment completed', 'success');
+        document.getElementById('downloadResultsBtn').disabled = false;
+        document.getElementById('downloadSummaryBtn').disabled = false;
+        displayAllResults();
+      } catch (error) {
+        setStatus('experimentStatus', 'Experiment failed: ' + error.message, 'error');
+        log('experimentLog', 'ERROR: ' + error.stack);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function runFullExperiment() {
+      if (!dataset) return;
+      if (!localVisionModel || localVisionModel.getState() !== ModelState.READY) {
+        setStatus('experimentStatus', 'Model not loaded', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('runFullExperimentBtn');
+      btn.disabled = true;
+      setStatus('experimentStatus', 'Running FULL experiment (all categories)...', 'warning');
+      document.getElementById('progressFill').style.width = '0%';
+
+      const totalRuns = dataset.samples.length * 3;
+      let completedRuns = 0;
+
+      try {
+        for (const sample of dataset.samples) {
+          for (const strategy of ['dom_only', 'unconditional_vision', 'dom_gated_vision']) {
+            const result = await runSingleExperiment(sample, strategy, selectedBackend);
+            experimentResults.push(result);
+            const backendInfo = result.modelInferenceResult?.backend ?? 'N/A';
+            const fallbackInfo = result.modelInferenceResult?.wasmFallback ? ' (WASM fallback)' : '';
+            log('experimentLog', `${sample.metadata.id} [${strategy}/${backendInfo}${fallbackInfo}]: ${result.duration.toFixed(2)}ms, visionInvoked=${result.visionGateInfo.visionInvoked}, detections=${result.detections.length}`);
+            completedRuns++;
+            const progress = (completedRuns / totalRuns) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+          }
+        }
+        setStatus('experimentStatus', 'FULL experiment completed!', 'success');
+        document.getElementById('downloadResultsBtn').disabled = false;
+        document.getElementById('downloadSummaryBtn').disabled = false;
+        displayAllResults();
+      } catch (error) {
+        setStatus('experimentStatus', 'Experiment failed: ' + error.message, 'error');
+        log('experimentLog', 'ERROR: ' + error.stack);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function displayResult(result) {
+      const frameDoc = document.getElementById('sampleFrame').contentDocument || document.getElementById('sampleFrame').contentWindow.document;
+      const elements = extractDOMElements(frameDoc);
+      const gateDecision = evaluateVisionGate(elements);
+
+      const backendInfo = result.modelInferenceResult?.backend ?? 'N/A';
+      const requestedBackend = result.modelInferenceResult?.requestedBackend ?? 'N/A';
+      const webgpuAvailable = result.modelInferenceResult?.webgpuAvailable ? 'Yes' : 'No';
+      const webgpuInitSuccess = result.modelInferenceResult?.webgpuInitializationSuccess ? 'Yes' : 'No';
+      const wasmFallback = result.modelInferenceResult?.wasmFallback ? 'Yes' : 'No';
+      const fallbackReason = result.modelInferenceResult?.fallbackReason ?? 'N/A';
+      const initTime = result.modelInferenceResult?.initializationTimeMs?.toFixed(2) ?? 'N/A';
+
+      const table = `
+        <table class="results-table">
+          <tr><th>Metric</th><th>Value</th></tr>
+          <tr><td>Sample</td><td>${result.sampleId} (Cat ${result.category})</td></tr>
+          <tr><td>Strategy</td><td>${result.strategy}</td></tr>
+          <tr><td>Backend (Requested)</td><td>${requestedBackend}</td></tr>
+          <tr><td>Backend (Active)</td><td>${backendInfo}</td></tr>
+          <tr><td>WebGPU Available</td><td>${webgpuAvailable}</td></tr>
+          <tr><td>WebGPU Init Success</td><td>${webgpuInitSuccess}</td></tr>
+          <tr><td>WASM Fallback</td><td>${wasmFallback}</td></tr>
+          <tr><td>Fallback Reason</td><td>${fallbackReason}</td></tr>
+          <tr><td>Init Time (ms)</td><td>${initTime}</td></tr>
+          <tr><td>Duration</td><td>${result.duration.toFixed(2)}ms</td></tr>
+          <tr><td>Vision Invoked</td><td>${result.visionGateInfo.visionInvoked ? 'Yes' : 'No'}</td></tr>
+          <tr><td>Vision Skipped</td><td>${result.visionGateInfo.visionSkipped ? 'Yes' : 'No'}</td></tr>
+          <tr><td>Gate Decision</td><td>${gateDecision.shouldRunVision ? 'RUN' : 'SKIP'}</td></tr>
+          <tr><td>Gate Reason</td><td>${gateDecision.reason}</td></tr>
+          <tr><td>Visual Regions</td><td>${gateDecision.visualRegionsCount}</td></tr>
+          <tr><td>Signals</td><td>${gateDecision.signals.length}</td></tr>
+          <tr><td>Total Detections</td><td>${result.detections.length}</td></tr>
+          <tr><td>Layer 1 Detections</td><td>${result.detections.filter(d => d.source === 'layer1_typed_field').length}</td></tr>
+          <tr><td>Layer 2 Detections</td><td>${result.detections.filter(d => d.source === 'layer2_regex').length}</td></tr>
+          <tr><td>Layer 3 Detections</td><td>${result.detections.filter(d => d.source === 'layer3_visual').length}</td></tr>
+          <tr><td>Model Inference Success</td><td>${result.modelInferenceResult?.success ? 'Yes' : 'N/A'}</td></tr>
+          <tr><td>Model State</td><td>${result.modelInferenceResult?.modelState || 'N/A'}</td></tr>
+          <tr><td>Model Error</td><td>${result.modelInferenceResult?.error || 'None'}</td></tr>
+        </table>
+      `;
+      document.getElementById('resultsTable').innerHTML = table;
+      log('resultsLog', JSON.stringify(result, null, 2));
+    }
+
+    function displayAllResults() {
+      let table = `
+        <table class="results-table">
+          <tr><th>Sample</th><th>Category</th><th>Strategy</th><th>Backend</th><th>Duration (ms)</th><th>Vision Invoked</th><th>Gate Decision</th><th>Detections</th><th>Model Success</th></tr>
+      `;
+      for (const result of experimentResults) {
+        const gateDecision = result.visionGateInfo.decision;
+        const backendInfo = result.modelInferenceResult?.backend ?? 'N/A';
+        const fallbackBadge = result.modelInferenceResult?.wasmFallback ? ' <span class="backend-badge backend-fallback">fallback</span>' : '';
+        table += `
+          <tr>
+            <td>${result.sampleId}</td>
+            <td>Cat ${result.category}</td>
+            <td>${result.strategy}</td>
+            <td>${backendInfo}${fallbackBadge}</td>
+            <td>${result.duration.toFixed(2)}</td>
+            <td>${result.visionGateInfo.visionInvoked ? 'Yes' : 'No'}</td>
+            <td>${gateDecision.shouldRunVision ? 'RUN' : 'SKIP'}</td>
+            <td>${result.detections.length}</td>
+            <td>${result.modelInferenceResult?.success ? 'Yes' : 'N/A'}</td>
+          </tr>
+        `;
+      }
+      table += '</table>';
+      document.getElementById('resultsTable').innerHTML = table;
+    }
+
+    function downloadResults() {
+      const data = {
+        experiment: 'Phase 15: WebGPU + WASM Fallback',
+        timestamp: new Date().toISOString(),
+        environment: {
+          browser: navigator.userAgent,
+          model: localVisionModel?.getModelInfo() || 'Not loaded',
+          modelStatus: localVisionModel?.getModelStatus() || 'Not loaded'
+        },
+        results: experimentResults
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'phase15-experiment-results-' + Date.now() + '.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function downloadSummary() {
+      let text = 'SIH 26171 - Phase 15 Browser Experiment Results\n';
+      text += '================================================\n\n';
+      text += 'Timestamp: ' + new Date().toISOString() + '\n';
+      text += 'Browser: ' + navigator.userAgent + '\n';
+      text += 'Model: ' + JSON.stringify(localVisionModel?.getModelInfo() || 'Not loaded') + '\n';
+      text += 'Model Status: ' + JSON.stringify(localVisionModel?.getModelStatus() || 'Not loaded') + '\n\n';
+      
+      const strategies = ['dom_only', 'unconditional_vision', 'dom_gated_vision'];
+      for (const strategy of strategies) {
+        const results = experimentResults.filter(r => r.strategy === strategy);
+        const avgDuration = results.reduce((sum, r) => sum + r.duration, 0) / (results.length || 1);
+        const visionInvoked = results.filter(r => r.visionGateInfo.visionInvoked).length;
+        const visionSkipped = results.filter(r => r.visionGateInfo.visionSkipped).length;
+        const avgDetections = results.reduce((sum, r) => sum + r.detections.length, 0) / (results.length || 1);
+        
+        text += `${strategy}:\n`;
+        text += `  Samples: ${results.length}\n`;
+        text += `  Avg Duration: ${avgDuration.toFixed(2)}ms\n`;
+        text += `  Vision Invoked: ${visionInvoked}\n`;
+        text += `  Vision Skipped: ${visionSkipped}\n`;
+        text += `  Avg Detections: ${avgDetections.toFixed(1)}\n\n`;
+      }
+
+      text += 'Per-Sample:\n';
+      for (const result of experimentResults) {
+        const backendInfo = result.modelInferenceResult?.backend ?? 'N/A';
+        const fallbackInfo = result.modelInferenceResult?.wasmFallback ? ' (WASM fallback)' : '';
+        text += `  ${result.sampleId} [${result.strategy}/${backendInfo}${fallbackInfo}]: ${result.duration.toFixed(2)}ms, vision=${result.visionGateInfo.visionInvoked}, detections=${result.detections.length}\n`;
+      }
+
+      const blob = new Blob([text], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'phase15-experiment-summary-' + Date.now() + '.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Load dataset on startup
+    loadDataset().catch(e => {
+      setStatus('experimentStatus', 'Failed to load dataset: ' + e.message, 'error');
+      log('experimentLog', 'ERROR loading dataset: ' + e.stack);
+    });
+  </script>
+</body>
+</html>

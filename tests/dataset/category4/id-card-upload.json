@@ -1,0 +1,92 @@
+{
+  "metadata": {
+    "id": "cat4-id-card-upload",
+    "category": 4,
+    "description": "ID card upload page with synthetic government ID card containing face and personal data",
+    "html_file": "id-card-upload.html",
+    "url_origin": "https://example.test",
+    "title": "ID Card Upload"
+  },
+  "ground_truth": [
+    {
+      "element_id": "verify-name",
+      "type": "name",
+      "expected_layer": 1,
+      "description": "Standard name input with autocomplete=name"
+    },
+    {
+      "element_id": "id-card-preview",
+      "type": "face",
+      "expected_layer": 3,
+      "description": "ID card SVG containing synthetic face - requires Layer 3 face detection"
+    },
+    {
+      "element_id": "id-card-preview",
+      "type": "government_id",
+      "expected_layer": 3,
+      "description": "ID card contains government ID number and personal data - requires Layer 3 (OCR deferred per PII_DETECTION.md)"
+    }
+  ],
+  "expected_detections": [
+    {
+      "element_id": "verify-name",
+      "pii_type": "name",
+      "detection_layer": 1,
+      "selector": "#verify-name",
+      "text_content": "Jane Doe",
+      "severity": "medium"
+    },
+    {
+      "element_id": "id-card-preview",
+      "pii_type": "face",
+      "detection_layer": 3,
+      "selector": "#id-card-preview",
+      "severity": "critical"
+    },
+    {
+      "element_id": "id-card-preview",
+      "pii_type": "government_id",
+      "detection_layer": 3,
+      "selector": "#id-card-preview",
+      "severity": "critical"
+    }
+  ],
+  "expected_redactions": [
+    {
+      "element_id": "verify-name",
+      "pii_type": "name",
+      "expected_placeholder": "[NAME]",
+      "original_value": "Jane Doe"
+    },
+    {
+      "element_id": "id-card-preview",
+      "pii_type": "face",
+      "expected_placeholder": "[FACE_REDACTED]",
+      "original_value": "synthetic_id_card_face"
+    },
+    {
+      "element_id": "id-card-preview",
+      "pii_type": "government_id",
+      "expected_placeholder": "[GOVERNMENT_ID]",
+      "original_value": "ID123456789"
+    }
+  ],
+  "expected_hidden_elements": [],
+  "expected_action_outcomes": [
+    {
+      "target_selector": "#verify-name",
+      "action_type": "fill",
+      "expected_validation": "fail",
+      "expected_failure_reason": "SENSITIVE_ACTION",
+      "is_malicious": false,
+      "description": "Fill verification name - should be rejected as sensitive"
+    },
+    {
+      "target_selector": "#verify-btn",
+      "action_type": "click",
+      "expected_validation": "pass",
+      "is_malicious": false,
+      "description": "Click verify - non-sensitive action should pass"
+    }
+  ]
+}

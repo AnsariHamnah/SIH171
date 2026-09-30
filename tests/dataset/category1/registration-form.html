@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Registration Form</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 400px; margin: 2rem auto; padding: 1rem; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+    input, select { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    button { width: 100%; padding: 0.75rem; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; }
+    button:hover { background: #218838; }
+  </style>
+</head>
+<body>
+  <h1>Create Account</h1>
+  <form id="register-form">
+    <div class="form-group">
+      <label for="full-name">Full Name</label>
+      <input type="text" id="full-name" name="fullName" autocomplete="name" placeholder="John Doe" value="John Doe">
+    </div>
+    <div class="form-group">
+      <label for="reg-email">Email</label>
+      <input type="email" id="reg-email" name="email" autocomplete="email" placeholder="user@example.test" value="john@example.test">
+    </div>
+    <div class="form-group">
+      <label for="reg-password">Password</label>
+      <input type="password" id="reg-password" name="password" autocomplete="new-password" value="securePass456">
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+1-555-123-4567" value="+1-555-123-4567">
+    </div>
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input type="text" id="address" name="address" autocomplete="street-address" placeholder="123 Main St" value="123 Main Street">
+    </div>
+    <div class="form-group">
+      <label for="country">Country</label>
+      <select id="country" name="country" autocomplete="country">
+        <option value="us" selected>United States</option>
+        <option value="ca">Canada</option>
+        <option value="uk">United Kingdom</option>
+      </select>
+    </div>
+    <button type="submit" id="register-btn">Register</button>
+  </form>
+</body>
+</html>

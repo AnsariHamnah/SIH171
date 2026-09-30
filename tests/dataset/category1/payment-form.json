@@ -1,0 +1,202 @@
+{
+  "metadata": {
+    "id": "cat1-payment-form",
+    "category": 1,
+    "description": "Payment form with credit card fields using autocomplete attributes",
+    "html_file": "payment-form.html",
+    "url_origin": "https://example.test",
+    "title": "Payment Form"
+  },
+  "ground_truth": [
+    {
+      "element_id": "cardholder",
+      "type": "name",
+      "expected_layer": 1,
+      "description": "Cardholder name with autocomplete=cc-name"
+    },
+    {
+      "element_id": "cc-1",
+      "type": "credit_card",
+      "expected_layer": 1,
+      "description": "Credit card number part 1 with autocomplete=cc-number"
+    },
+    {
+      "element_id": "cc-2",
+      "type": "credit_card",
+      "expected_layer": 1,
+      "description": "Credit card number part 2 with autocomplete=cc-number"
+    },
+    {
+      "element_id": "cc-3",
+      "type": "credit_card",
+      "expected_layer": 1,
+      "description": "Credit card number part 3 with autocomplete=cc-number"
+    },
+    {
+      "element_id": "cc-4",
+      "type": "credit_card",
+      "expected_layer": 1,
+      "description": "Credit card number part 4 with autocomplete=cc-number"
+    },
+    {
+      "element_id": "cc-exp",
+      "type": "credit_card",
+      "expected_layer": 1,
+      "description": "Credit card expiration with autocomplete=cc-exp"
+    },
+    {
+      "element_id": "cc-cvc",
+      "type": "credit_card",
+      "expected_layer": 1,
+      "description": "Credit card CVC with autocomplete=cc-csc"
+    },
+    {
+      "element_id": "billing-email",
+      "type": "email",
+      "expected_layer": 1,
+      "description": "Billing email with type=email and autocomplete=email"
+    }
+  ],
+  "expected_detections": [
+    {
+      "element_id": "cardholder",
+      "pii_type": "name",
+      "detection_layer": 1,
+      "selector": "#cardholder",
+      "text_content": "John Doe",
+      "severity": "medium"
+    },
+    {
+      "element_id": "cc-1",
+      "pii_type": "credit_card",
+      "detection_layer": 1,
+      "selector": "#cc-1",
+      "text_content": "4242",
+      "severity": "critical"
+    },
+    {
+      "element_id": "cc-2",
+      "pii_type": "credit_card",
+      "detection_layer": 1,
+      "selector": "#cc-2",
+      "text_content": "4242",
+      "severity": "critical"
+    },
+    {
+      "element_id": "cc-3",
+      "pii_type": "credit_card",
+      "detection_layer": 1,
+      "selector": "#cc-3",
+      "text_content": "4242",
+      "severity": "critical"
+    },
+    {
+      "element_id": "cc-4",
+      "pii_type": "credit_card",
+      "detection_layer": 1,
+      "selector": "#cc-4",
+      "text_content": "4242",
+      "severity": "critical"
+    },
+    {
+      "element_id": "cc-exp",
+      "pii_type": "credit_card",
+      "detection_layer": 1,
+      "selector": "#cc-exp",
+      "text_content": "12/28",
+      "severity": "critical"
+    },
+    {
+      "element_id": "cc-cvc",
+      "pii_type": "credit_card",
+      "detection_layer": 1,
+      "selector": "#cc-cvc",
+      "text_content": "123",
+      "severity": "critical"
+    },
+    {
+      "element_id": "billing-email",
+      "pii_type": "email",
+      "detection_layer": 1,
+      "selector": "#billing-email",
+      "text_content": "billing@example.test",
+      "severity": "high"
+    }
+  ],
+  "expected_redactions": [
+    {
+      "element_id": "cardholder",
+      "pii_type": "name",
+      "expected_placeholder": "[NAME]",
+      "original_value": "John Doe"
+    },
+    {
+      "element_id": "cc-1",
+      "pii_type": "credit_card",
+      "expected_placeholder": "[CREDIT_CARD]",
+      "original_value": "4242"
+    },
+    {
+      "element_id": "cc-2",
+      "pii_type": "credit_card",
+      "expected_placeholder": "[CREDIT_CARD]",
+      "original_value": "4242"
+    },
+    {
+      "element_id": "cc-3",
+      "pii_type": "credit_card",
+      "expected_placeholder": "[CREDIT_CARD]",
+      "original_value": "4242"
+    },
+    {
+      "element_id": "cc-4",
+      "pii_type": "credit_card",
+      "expected_placeholder": "[CREDIT_CARD]",
+      "original_value": "4242"
+    },
+    {
+      "element_id": "cc-exp",
+      "pii_type": "credit_card",
+      "expected_placeholder": "[CREDIT_CARD]",
+      "original_value": "12/28"
+    },
+    {
+      "element_id": "cc-cvc",
+      "pii_type": "credit_card",
+      "expected_placeholder": "[CREDIT_CARD]",
+      "original_value": "123"
+    },
+    {
+      "element_id": "billing-email",
+      "pii_type": "email",
+      "expected_placeholder": "[EMAIL]",
+      "original_value": "billing@example.test"
+    }
+  ],
+  "expected_hidden_elements": [],
+  "expected_action_outcomes": [
+    {
+      "target_selector": "#cardholder",
+      "action_type": "fill",
+      "expected_validation": "fail",
+      "expected_failure_reason": "SENSITIVE_ACTION",
+      "is_malicious": false,
+      "description": "Fill cardholder name - should be rejected as sensitive"
+    },
+    {
+      "target_selector": "#cc-1",
+      "action_type": "fill",
+      "expected_validation": "fail",
+      "expected_failure_reason": "SENSITIVE_ACTION",
+      "is_malicious": false,
+      "description": "Fill credit card number - should be rejected as sensitive"
+    },
+    {
+      "target_selector": "#pay-btn",
+      "action_type": "click",
+      "expected_validation": "pass",
+      "is_malicious": false,
+      "description": "Click pay button - non-sensitive action should pass"
+    }
+  ]
+}

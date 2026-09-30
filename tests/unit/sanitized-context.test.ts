@@ -281,6 +281,7 @@ describe('Sanitized Context Builder', () => {
             isInteractive: true,
             isVisible: true,
             piiDetections: [],
+            formId: null,
           }],
         },
         redactions: [],
@@ -303,6 +304,7 @@ describe('Sanitized Context Builder', () => {
             isInteractive: true,
             isVisible: true,
             piiDetections: [createDetection('password', { originalValue: 'secret123' })],
+            formId: null,
           }],
         },
         redactions: [],
@@ -325,6 +327,7 @@ describe('Sanitized Context Builder', () => {
             isInteractive: false,
             isVisible: true,
             piiDetections: [createDetection('phone', { originalValue: '555-123-4567' })],
+            formId: null,
           }],
         },
         redactions: [],
@@ -347,6 +350,7 @@ describe('Sanitized Context Builder', () => {
             isInteractive: true,
             isVisible: true,
             piiDetections: [createDetection('email', { originalValue: 'alice@example.test' })],
+            formId: null,
           }],
         },
         redactions: [],
@@ -550,6 +554,202 @@ describe('Sanitized Context Builder', () => {
       
       expect(global.fetch).not.toHaveBeenCalled();
       global.fetch = originalFetch;
+    });
+  });
+
+  describe('Visual Privacy Invariants (Phase 11)', () => {
+    it('visualRegions populated when visual PII detected', () => {
+      setupDOM(`
+        <svg id="face-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="45" fill="#ffdbac"/>
+          <circle cx="35" cy="40" r="5" fill="#333"/>
+          <circle cx="65" cy="40" r="5" fill="#333"/>
+        </svg>
+      `);
+      
+      const elements = extractDOMElements();
+      const result = runDetectionPipeline(elements);
+      const detectionsMap = groupDetectionsByElement(elements, result.detections);
+      
+      const domElements: DOMElementMetadata[] = elements.map(el => {
+        const elementDetections = detectionsMap.get(el.element) || [];
+        return toDOMElementMetadata(el, elementDetections);
+      });
+
+      const context = buildSanitizedContext(domElements, 'https://example.test/page');
+      
+      expect(context.metadata.visualRegions).toBeDefined();
+      expect(Array.isArray(context.metadata.visualRegions)).toBe(true);
+      expect(context.metadata.visualRegions!.length).toBeGreaterThan(0);
+      expect(context.metadata.visualRegions![0].piiDetections.length).toBeGreaterThan(0);
+      expect(context.metadata.visualRegions![0].piiDetections[0].type).toBe('face');
+      expect(context.metadata.visualRegions![0].piiDetections[0].source).toBe('layer3_visual');
+    });
+
+    it('visualRegions undefined for DOM-only page', () => {
+      setupDOM('<input type="email" id="email" value="alice@example.test" />');
+      
+      const elements = extractDOMElements();
+      const result = runDetectionPipeline(elements);
+      const detectionsMap = groupDetectionsByElement(elements, result.detections);
+      
+      const domElements: DOMElementMetadata[] = elements.map(el => {
+        const elementDetections = detectionsMap.get(el.element) || [];
+        return toDOMElementMetadata(el, elementDetections);
+      });
+
+      const context = buildSanitizedContext(domElements, 'https://example.test/page');
+      
+      expect(context.metadata.visualRegions).toBeUndefined();
+    });
+
+    it('visual region redaction actions included in redactions', () => {
+      setupDOM(`
+        <svg id="face-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="45" fill="#ffdbac"/>
+          <circle cx="35" cy="40" r="5" fill="#333"/>
+          <circle cx="65" cy="40" r="5" fill="#333"/>
+        </svg>
+      `);
+      
+      const elements = extractDOMElements();
+      const result = runDetectionPipeline(elements);
+      const detectionsMap = groupDetectionsByElement(elements, result.detections);
+      
+      const domElements: DOMElementMetadata[] = elements.map(el => {
+        const elementDetections = detectionsMap.get(el.element) || [];
+        return toDOMElementMetadata(el, elementDetections);
+      });
+
+      const context = buildSanitizedContext(domElements, 'https://example.test/page');
+      
+      const visualRedactions = context.redactions.filter(r => r.type === 'mask' || r.type === 'blur');
+      expect(visualRedactions.length).toBeGreaterThan(0);
+      expect(visualRedactions[0].target.type).toBe('face');
+      expect(visualRedactions[0].replacement).toBe('[FACE]');
+    });
+
+    it('face placeholder used for visual redaction', () => {
+      setupDOM(`
+        <svg id="face-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="45" fill="#ffdbac"/>
+          <circle cx="35" cy="40" r="5" fill="#333"/>
+          <circle cx="65" cy="40" r="5" fill="#333"/>
+        </svg>
+      `);
+      
+      const elements = extractDOMElements();
+      const result = runDetectionPipeline(elements);
+      const detectionsMap = groupDetectionsByElement(elements, result.detections);
+      
+      const domElements: DOMElementMetadata[] = elements.map(el => {
+        const elementDetections = detectionsMap.get(el.element) || [];
+        return toDOMElementMetadata(el, elementDetections);
+      });
+
+      const context = buildSanitizedContext(domElements, 'https://example.test/page');
+      
+      const faceRedaction = context.redactions.find(r => r.target.type === 'face');
+      expect(faceRedaction).toBeDefined();
+      expect(faceRedaction?.replacement).toBe('[FACE]');
+    });
+
+    it('no raw face pixels in sanitized output', () => {
+      setupDOM(`
+        <svg id="face-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="45" fill="#ffdbac"/>
+          <circle cx="35" cy="40" r="5" fill="#333"/>
+          <circle cx="65" cy="40" r="5" fill="#333"/>
+        </svg>
+      `);
+      
+      const elements = extractDOMElements();
+      const result = runDetectionPipeline(elements);
+      const detectionsMap = groupDetectionsByElement(elements, result.detections);
+      
+      const domElements: DOMElementMetadata[] = elements.map(el => {
+        const elementDetections = detectionsMap.get(el.element) || [];
+        return toDOMElementMetadata(el, elementDetections);
+      });
+
+      const context = buildSanitizedContext(domElements, 'https://example.test/page');
+      
+      // Verify no raw face data in visual regions
+      for (const region of context.metadata.visualRegions || []) {
+        expect(region.description).not.toContain('circle cx="35"');
+        expect(region.description).not.toContain('circle cx="65"');
+        // The visual region description should not contain raw SVG face structure
+      }
+    });
+
+    it('DOM + visual PII both handled in combined context', () => {
+      setupDOM(`
+        <input type="email" id="email" value="alice@example.test" />
+        <svg id="face-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="45" fill="#ffdbac"/>
+          <circle cx="35" cy="40" r="5" fill="#333"/>
+          <circle cx="65" cy="40" r="5" fill="#333"/>
+        </svg>
+      `);
+      
+      const elements = extractDOMElements();
+      const result = runDetectionPipeline(elements);
+      const detectionsMap = groupDetectionsByElement(elements, result.detections);
+      
+      const domElements: DOMElementMetadata[] = elements.map(el => {
+        const elementDetections = detectionsMap.get(el.element) || [];
+        return toDOMElementMetadata(el, elementDetections);
+      });
+
+      const context = buildSanitizedContext(domElements, 'https://example.test/page');
+      
+      // DOM redaction
+      const emailRedaction = context.redactions.find(r => r.target.type === 'email');
+      expect(emailRedaction).toBeDefined();
+      expect(emailRedaction?.replacement).toBe('[EMAIL]');
+      
+      // Visual redaction
+      const faceRedaction = context.redactions.find(r => r.target.type === 'face');
+      expect(faceRedaction).toBeDefined();
+      expect(faceRedaction?.replacement).toBe('[FACE]');
+      
+      // Both visual regions and dom elements present
+      expect(context.metadata.visualRegions).toBeDefined();
+      expect(context.metadata.domElements.length).toBeGreaterThan(0);
+    });
+
+    it('visual region requiresVisionModel flag set correctly', () => {
+      setupDOM(`
+        <svg id="face-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="45" fill="#ffdbac"/>
+          <circle cx="35" cy="40" r="5" fill="#333"/>
+          <circle cx="65" cy="40" r="5" fill="#333"/>
+        </svg>
+        <img id="regular-img" src="photo.png" alt="regular photo" />
+      `);
+      
+      const elements = extractDOMElements();
+      const result = runDetectionPipeline(elements);
+      const detectionsMap = groupDetectionsByElement(elements, result.detections);
+      
+      const domElements: DOMElementMetadata[] = elements.map(el => {
+        const elementDetections = detectionsMap.get(el.element) || [];
+        return toDOMElementMetadata(el, elementDetections);
+      });
+
+      const context = buildSanitizedContext(domElements, 'https://example.test/page');
+      
+      const faceRegion = context.metadata.visualRegions!.find(r => 
+        r.piiDetections.some(d => d.type === 'face')
+      );
+      expect(faceRegion).toBeDefined();
+      expect(faceRegion?.requiresVisionModel).toBe(true);
+      
+      // Regular image without detections should not be in visualRegions with detections
+      const regularRegion = context.metadata.visualRegions!.find(r => 
+        r.piiDetections.length === 0
+      );
+      // Note: regular images without detections are not included in visualRegions
     });
   });
 });

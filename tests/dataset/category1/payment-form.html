@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Form</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 400px; margin: 2rem auto; padding: 1rem; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+    input { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    .card-inputs { display: flex; gap: 0.5rem; }
+    .card-inputs input { flex: 1; }
+    button { width: 100%; padding: 0.75rem; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; }
+    button:hover { background: #0052a3; }
+  </style>
+</head>
+<body>
+  <h1>Payment Details</h1>
+  <form id="payment-form">
+    <div class="form-group">
+      <label for="cardholder">Cardholder Name</label>
+      <input type="text" id="cardholder" name="cardholder" autocomplete="cc-name" placeholder="John Doe" value="John Doe">
+    </div>
+    <div class="form-group">
+      <label>Card Number</label>
+      <div class="card-inputs">
+        <input type="text" id="cc-1" name="cc1" autocomplete="cc-number" maxlength="4" placeholder="1234" value="4242">
+        <input type="text" id="cc-2" name="cc2" autocomplete="cc-number" maxlength="4" placeholder="5678" value="4242">
+        <input type="text" id="cc-3" name="cc3" autocomplete="cc-number" maxlength="4" placeholder="9012" value="4242">
+        <input type="text" id="cc-4" name="cc4" autocomplete="cc-number" maxlength="4" placeholder="3456" value="4242">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="cc-exp">Expiration</label>
+      <input type="text" id="cc-exp" name="exp" autocomplete="cc-exp" placeholder="MM/YY" value="12/28">
+    </div>
+    <div class="form-group">
+      <label for="cc-cvc">CVC</label>
+      <input type="text" id="cc-cvc" name="cvc" autocomplete="cc-csc" maxlength="4" placeholder="123" value="123">
+    </div>
+    <div class="form-group">
+      <label for="billing-email">Billing Email</label>
+      <input type="email" id="billing-email" name="billingEmail" autocomplete="email" placeholder="billing@example.test" value="billing@example.test">
+    </div>
+    <button type="submit" id="pay-btn">Pay $99.00</button>
+  </form>
+</body>
+</html>

@@ -1,0 +1,101 @@
+{
+  "metadata": {
+    "id": "cat4-profile-with-face",
+    "category": 4,
+    "description": "Profile page with synthetic face avatar image",
+    "html_file": "profile-with-face.html",
+    "url_origin": "https://example.test",
+    "title": "Profile with Face Photo"
+  },
+  "ground_truth": [
+    {
+      "element_id": "display-name",
+      "type": "name",
+      "expected_layer": 1,
+      "description": "Standard name input with autocomplete=name"
+    },
+    {
+      "element_id": "profile-email",
+      "type": "email",
+      "expected_layer": 1,
+      "description": "Standard email input with type=email"
+    },
+    {
+      "element_id": "face-avatar",
+      "type": "face",
+      "expected_layer": 3,
+      "description": "Synthetic face avatar SVG - requires Layer 3 face detection"
+    }
+  ],
+  "expected_detections": [
+    {
+      "element_id": "display-name",
+      "pii_type": "name",
+      "detection_layer": 1,
+      "selector": "#display-name",
+      "text_content": "Test User",
+      "severity": "medium"
+    },
+    {
+      "element_id": "profile-email",
+      "pii_type": "email",
+      "detection_layer": 1,
+      "selector": "#profile-email",
+      "text_content": "profile@example.test",
+      "severity": "high"
+    },
+    {
+      "element_id": "face-avatar",
+      "pii_type": "face",
+      "detection_layer": 3,
+      "selector": "#face-avatar",
+      "severity": "critical"
+    }
+  ],
+  "expected_redactions": [
+    {
+      "element_id": "display-name",
+      "pii_type": "name",
+      "expected_placeholder": "[NAME]",
+      "original_value": "Test User"
+    },
+    {
+      "element_id": "profile-email",
+      "pii_type": "email",
+      "expected_placeholder": "[EMAIL]",
+      "original_value": "profile@example.test"
+    },
+    {
+      "element_id": "face-avatar",
+      "pii_type": "face",
+      "expected_placeholder": "[FACE_REDACTED]",
+      "original_value": "synthetic_face_svg"
+    }
+  ],
+  "expected_hidden_elements": [],
+  "expected_action_outcomes": [
+    {
+      "target_selector": "#display-name",
+      "action_type": "fill",
+      "expected_validation": "fail",
+      "expected_failure_reason": "SENSITIVE_ACTION",
+      "is_malicious": false,
+      "description": "Fill display name - should be rejected as sensitive"
+    },
+    {
+      "target_selector": "#profile-email",
+      "action_type": "fill",
+      "expected_validation": "fail",
+      "expected_failure_reason": "SENSITIVE_ACTION",
+      "is_malicious": false,
+      "description": "Fill email - should be rejected as sensitive"
+    },
+    {
+      "target_selector": "#profile-submit",
+      "action_type": "click",
+      "expected_validation": "pass",
+      "is_malicious": false,
+      "description": "Click save - non-sensitive action should pass"
+    }
+  ]
+}

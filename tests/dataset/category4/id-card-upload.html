@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ID Card Upload</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 500px; margin: 2rem auto; padding: 1rem; }
+    .upload-area { border: 2px dashed #ccc; border-radius: 8px; padding: 2rem; text-align: center; margin-bottom: 1.5rem; background: #fafafa; }
+    .upload-area.dragover { border-color: #0066cc; background: #e8f0fe; }
+    .id-preview { width: 100%; max-width: 400px; height: auto; border: 1px solid #ddd; border-radius: 4px; margin-top: 1rem; display: none; }
+    .id-card-svg { width: 100%; height: auto; display: block; margin: 0 auto; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+    input { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    button { width: 100%; padding: 0.75rem; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; }
+    button:hover { background: #218838; }
+    .legend { font-size: 0.75rem; color: #666; text-align: center; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+  <h1>ID Card Verification</h1>
+  <p>Upload a government ID card for verification.</p>
+  
+  <form id="id-upload-form">
+    <div class="upload-area" id="upload-area">
+      <input type="file" id="id-file" name="idFile" accept="image/*" style="display: none;">
+      <button type="button" id="choose-file-btn" onclick="document.getElementById('id-file').click()">Choose ID Card Image</button>
+      <p style="margin-top: 0.5rem; color: #666;">or drag and drop</p>
+    </div>
+    
+    <div id="preview-container" style="display: none;">
+      <h3>Preview</h3>
+      <!-- Synthetic ID card rendered as SVG -->
+      <svg class="id-card-svg" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" id="id-card-preview">
+        <rect x="0" y="0" width="400" height="250" rx="8" fill="#f0f0f0" stroke="#ccc" stroke-width="2"/>
+        <rect x="20" y="20" width="360" height="210" rx="4" fill="white" stroke="#ddd" stroke-width="1"/>
+        <text x="200" y="50" text-anchor="middle" font-family="system-ui" font-size="18" font-weight="bold" fill="#333">GOVERNMENT ID</text>
+        <text x="40" y="90" font-family="system-ui" font-size="12" fill="#666">NAME</text>
+        <text x="40" y="110" font-family="system-ui" font-size="16" fill="#333">JANE DOE</text>
+        <text x="40" y="140" font-family="system-ui" font-size="12" fill="#666">ID NUMBER</text>
+        <text x="40" y="160" font-family="monospace" font-size="14" fill="#333">ID123456789</text>
+        <text x="40" y="190" font-family="system-ui" font-size="12" fill="#666">DOB</text>
+        <text x="40" y="210" font-family="system-ui" font-size="14" fill="#333">01/01/1990</text>
+        <!-- Face placeholder -->
+        <circle cx="340" cy="125" r="35" fill="#ffdbac" stroke="#ddd" stroke-width="1"/>
+        <circle cx="330" cy="115" r="4" fill="#333"/>
+        <circle cx="350" cy="115" r="4" fill="#333"/>
+        <path d="M325,135 Q340,145 355,135" stroke="#333" stroke-width="2" fill="none"/>
+      </svg>
+      <div class="legend">Synthetic ID card with face (Layer 3 face + government_id detection)</div>
+    </div>
+    
+    <div class="form-group">
+      <label for="verify-name">Full Name (for verification)</label>
+      <input type="text" id="verify-name" name="verifyName" autocomplete="name" placeholder="Enter name as on ID" value="Jane Doe">
+    </div>
+    <button type="submit" id="verify-btn">Verify Identity</button>
+  </form>
+</body>
+</html>

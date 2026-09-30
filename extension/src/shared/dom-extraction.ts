@@ -46,7 +46,51 @@ function isElementVisible(element: Element): boolean {
   if (rect.width === 0 && rect.height === 0) {
     return false;
   }
+  if (isElementOffScreen(element, rect)) {
+    return false;
+  }
   return true;
+}
+
+function isElementOffScreen(element: Element, rect: DOMRect): boolean {
+  const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  
+  const style = window.getComputedStyle(element);
+  const position = style.position;
+  const transform = style.transform;
+  
+  if (position === 'absolute' || position === 'fixed') {
+    const left = parseFloat(style.left) || 0;
+    const top = parseFloat(style.top) || 0;
+    
+    const largeNegativeLeft = left < -viewportWidth;
+    const largeNegativeTop = top < -viewportHeight;
+    const largePositiveLeft = left > viewportWidth * 2;
+    const largePositiveTop = top > viewportHeight * 2;
+    
+    if (largeNegativeLeft || largeNegativeTop || largePositiveLeft || largePositiveTop) {
+      return true;
+    }
+  }
+  
+  if (transform && transform !== 'none') {
+    const translateMatch = transform.match(/translate\(?\s*(-?\d+(?:\.\d+)?)px?\s*,\s*(-?\d+(?:\.\d+)?)px?\s*\)?/);
+    if (translateMatch) {
+      const tx = parseFloat(translateMatch[1]);
+      const ty = parseFloat(translateMatch[2]);
+      if (Math.abs(tx) > viewportWidth * 2 || Math.abs(ty) > viewportHeight * 2) {
+        return true;
+      }
+    }
+  }
+  
+  const isOffScreenLeft = rect.right <= 0;
+  const isOffScreenRight = rect.left >= viewportWidth;
+  const isOffScreenTop = rect.bottom <= 0;
+  const isOffScreenBottom = rect.top >= viewportHeight;
+  
+  return isOffScreenLeft || isOffScreenRight || isOffScreenTop || isOffScreenBottom;
 }
 
 function isElementInViewport(element: Element): boolean {
@@ -211,5 +255,6 @@ export function toDOMElementMetadata(extracted: ExtractedElement, piiDetections:
     isInteractive: extracted.isInteractive,
     isVisible: extracted.isVisible,
     piiDetections,
+    formId: extracted.formId,
   };
 }

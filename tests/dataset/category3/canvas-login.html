@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Login Form</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 400px; margin: 2rem auto; padding: 1rem; }
+    canvas { border: 1px solid #ccc; border-radius: 4px; background: #fafafa; display: block; margin: 1rem auto; }
+    .legend { font-size: 0.75rem; color: #666; text-align: center; margin-top: 0.5rem; }
+    button { width: 100%; padding: 0.75rem; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; margin-top: 1rem; }
+    button:hover { background: #0052a3; }
+    .dom-fields { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #eee; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+    input { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+  </style>
+</head>
+<body>
+  <h1>Canvas-Rendered Form</h1>
+  <p>This page renders a login form entirely in a canvas element.</p>
+  
+  <canvas id="login-canvas" width="400" height="300"></canvas>
+  <div class="legend">Canvas-rendered form (username & password fields drawn on canvas)</div>
+  
+  <div class="dom-fields">
+    <h3>Standard DOM Fields (for comparison)</h3>
+    <form id="dom-form">
+      <div class="form-group">
+        <label for="dom-email">Email (DOM)</label>
+        <input type="email" id="dom-email" name="email" autocomplete="email" placeholder="user@example.test" value="canvas@example.test">
+      </div>
+      <div class="form-group">
+        <label for="dom-password">Password (DOM)</label>
+        <input type="password" id="dom-password" name="password" autocomplete="current-password" value="canvasPass123">
+      </div>
+      <button type="submit" id="dom-submit">Submit DOM Form</button>
+    </form>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('login-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Draw background
+    ctx.fillStyle = '#fafafa';
+    ctx.fillRect(0, 0, 400, 300);
+    
+    // Draw title
+    ctx.fillStyle = '#333';
+    ctx.font = 'bold 20px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('Canvas Login', 200, 40);
+    
+    // Draw username field
+    ctx.fillStyle = '#666';
+    ctx.font = '14px system-ui';
+    ctx.textAlign = 'left';
+    ctx.fillText('Username', 50, 80);
+    
+    ctx.strokeStyle = '#ccc';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(50, 90, 300, 38);
+    
+    ctx.fillStyle = '#333';
+    ctx.font = '16px monospace';
+    ctx.fillText('canvasuser', 60, 115);
+    
+    // Draw password field
+    ctx.fillStyle = '#666';
+    ctx.font = '14px system-ui';
+    ctx.fillText('Password', 50, 160);
+    
+    ctx.strokeStyle = '#ccc';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(50, 170, 300, 38);
+    
+    ctx.fillStyle = '#333';
+    ctx.font = '16px monospace';
+    ctx.fillText('\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', 60, 195);
+    
+    // Draw submit button
+    ctx.fillStyle = '#0066cc';
+    ctx.fillRect(50, 230, 300, 44);
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 16px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('Sign In', 200, 258);
+    
+    // Store canvas data for ground truth reference
+    canvas.dataset.canvasUsername = 'canvasuser';
+    canvas.dataset.canvasPassword = 'canvasPass123';
+  </script>
+</body>
+</html>

@@ -25,12 +25,9 @@
       "all_frames": true
     }
   ],
-  "offscreen_document": {
-    "src": "offscreen.html",
-    "reasons": ["WORKERS", "LOCAL_STORAGE"]
-  },
+ 
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "popup/popup.html",
     "default_title": "SIH 26171 Agent"
   },
   "icons": {
@@ -46,6 +43,6 @@
     }
   ],
   "content_security_policy": {
-    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; worker-src 'self' blob:;"
+   "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; worker-src 'self';"
   }
 }

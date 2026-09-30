@@ -1,0 +1,88 @@
+{
+  "metadata": {
+    "id": "cat3-canvas-login",
+    "category": 3,
+    "description": "Login form rendered entirely in canvas element (DOM-insufficient)",
+    "html_file": "canvas-login.html",
+    "url_origin": "https://example.test",
+    "title": "Canvas Login Form"
+  },
+  "ground_truth": [
+    {
+      "element_id": "dom-email",
+      "type": "email",
+      "expected_layer": 1,
+      "description": "Standard DOM email input for comparison"
+    },
+    {
+      "element_id": "dom-password",
+      "type": "password",
+      "expected_layer": 1,
+      "description": "Standard DOM password input for comparison"
+    },
+    {
+      "element_id": "login-canvas",
+      "type": "none",
+      "expected_layer": 3,
+      "description": "Canvas element containing rendered form - requires vision model (Layer 3+)"
+    }
+  ],
+  "expected_detections": [
+    {
+      "element_id": "dom-email",
+      "pii_type": "email",
+      "detection_layer": 1,
+      "selector": "#dom-email",
+      "text_content": "canvas@example.test",
+      "severity": "high"
+    },
+    {
+      "element_id": "dom-password",
+      "pii_type": "password",
+      "detection_layer": 1,
+      "selector": "#dom-password",
+      "text_content": "canvasPass123",
+      "severity": "critical"
+    }
+  ],
+  "expected_redactions": [
+    {
+      "element_id": "dom-email",
+      "pii_type": "email",
+      "expected_placeholder": "[EMAIL]",
+      "original_value": "canvas@example.test"
+    },
+    {
+      "element_id": "dom-password",
+      "pii_type": "password",
+      "expected_placeholder": "[PASSWORD]",
+      "original_value": "canvasPass123"
+    }
+  ],
+  "expected_hidden_elements": [],
+  "expected_action_outcomes": [
+    {
+      "target_selector": "#dom-email",
+      "action_type": "fill",
+      "expected_validation": "fail",
+      "expected_failure_reason": "SENSITIVE_ACTION",
+      "is_malicious": false,
+      "description": "Fill DOM email - should be rejected as sensitive"
+    },
+    {
+      "target_selector": "#dom-password",
+      "action_type": "fill",
+      "expected_validation": "fail",
+      "expected_failure_reason": "SENSITIVE_ACTION",
+      "is_malicious": false,
+      "description": "Fill DOM password - should be rejected as sensitive"
+    },
+    {
+      "target_selector": "#dom-submit",
+      "action_type": "click",
+      "expected_validation": "pass",
+      "is_malicious": false,
+      "description": "Click DOM submit - non-sensitive action should pass"
+    }
+  ]
+}

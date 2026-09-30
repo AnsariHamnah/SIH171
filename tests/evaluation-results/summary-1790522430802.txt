@@ -1,0 +1,101 @@
+SIH 26171 - Phase 9 Evaluation Results
+========================================
+
+Dataset Version: 1.0.0
+Timestamp: 2026-09-27T15:20:30.797Z
+Evaluator Version: 1.0.0
+
+Total Samples: 18
+Evaluated: 10
+Deferred: 4
+
+OVERALL METRICS (DOM-only, implemented capabilities):
+  PII Precision: 30.65%
+  PII Recall:    74.53%
+  PII F1:        41.58%
+  Redaction Precision: 68.71%
+
+CATEGORY BREAKDOWN:
+
+  Standard HTML Forms (DOM-sufficient) (Cat 1):
+    Samples Evaluated: 3, Deferred: 0
+    PII Precision: 49.07%
+    PII Recall:    95.83%
+    PII F1:        64.22%
+    Redaction Precision: 95.83%
+    Security Pass Rate: 0.00%
+    Per-Type:
+      email: P=50.0% R=100.0% F1=66.7%
+      phone: P=8.3% R=50.0% F1=14.3%
+      password: P=100.0% R=100.0% F1=100.0%
+      credit_card: P=85.7% R=100.0% F1=92.3%
+      address: P=50.0% R=100.0% F1=66.7%
+      name: P=50.0% R=50.0% F1=50.0%
+    Per-Layer:
+      Layer 1: P=95.8% R=95.8% F1=95.8%
+
+  Mislabeled / Custom-styled Fields (Cat 2):
+    Samples Evaluated: 3, Deferred: 0
+    PII Precision: 9.89%
+    PII Recall:    50.00%
+    PII F1:        16.18%
+    Redaction Precision: 33.33%
+    Security Pass Rate: 0.00%
+    Per-Type:
+      email: P=25.0% R=50.0% F1=33.3%
+      credit_card: P=66.7% R=66.7% F1=66.7%
+      ssn: P=33.3% R=100.0% F1=50.0%
+    Per-Layer:
+      Layer 1: P=50.0% R=50.0% F1=50.0%
+      Layer 2: P=7.7% R=25.0% F1=11.8%
+      Layer 3: P=50.0% R=50.0% F1=50.0%
+
+  Canvas-rendered / Non-DOM Content (Cat 3):
+    Samples Evaluated: 0, Deferred: 2
+    PII Precision: 0.00%
+    PII Recall:    0.00%
+    PII F1:        0.00%
+    Redaction Precision: 100.00%
+    Security Pass Rate: 0.00%
+    Per-Type:
+    Per-Layer:
+
+  Visual PII (Faces, ID Cards) (Cat 4):
+    Samples Evaluated: 0, Deferred: 2
+    PII Precision: 0.00%
+    PII Recall:    0.00%
+    PII F1:        0.00%
+    Redaction Precision: 50.00%
+    Security Pass Rate: 0.00%
+    Per-Type:
+    Per-Layer:
+
+  Prompt Injection Test Pages (Cat 5):
+    Samples Evaluated: 2, Deferred: 0
+    PII Precision: 26.04%
+    PII Recall:    75.00%
+    PII F1:        35.79%
+    Redaction Precision: 58.33%
+    Security Pass Rate: 100.00%
+    Per-Type:
+      email: P=50.0% R=100.0% F1=66.7%
+      credit_card: P=50.0% R=50.0% F1=50.0%
+    Per-Layer:
+      Layer 1: P=62.5% R=75.0% F1=67.9%
+
+  Mixed/Realistic Composite Pages (Cat 6):
+    Samples Evaluated: 2, Deferred: 0
+    PII Precision: 38.75%
+    PII Recall:    78.89%
+    PII F1:        51.50%
+    Redaction Precision: 78.89%
+    Security Pass Rate: 100.00%
+    Per-Type:
+      email: P=50.0% R=100.0% F1=66.7%
+      phone: P=3.8% R=50.0% F1=7.1%
+      password: P=100.0% R=100.0% F1=100.0%
+      credit_card: P=55.0% R=100.0% F1=70.8%
+      address: P=50.0% R=100.0% F1=66.7%
+      name: P=100.0% R=50.0% F1=66.7%
+    Per-Layer:
+      Layer 1: P=88.2% R=88.2% F1=88.2%
