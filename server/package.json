@@ -1,0 +1,28 @@
+{
+  "name": "sih-26171-server",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Server-side reasoning for SIH 26171 browser agent",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "lint": "eslint . --ext .ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "fastify": "^4.28.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.0",
+    "eslint": "^9.11.0",
+    "globals": "^15.9.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.7.0",
+    "vitest": "^2.1.0"
+  }
+}

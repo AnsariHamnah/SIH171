@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "WebWorker"],
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "types": ["chrome", "node", "vitest/globals"],
+    "skipLibCheck": true,
+    "verbatimModuleSyntax": false
+  },
+  "include": [
+    "./**/*.ts",
+    "../extension/src/**/*.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

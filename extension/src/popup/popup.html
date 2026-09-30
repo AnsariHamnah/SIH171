@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>SIH 26171 Agent</title>
+    <style>
+      body { font-family: system-ui; padding: 16px; width: 300px; }
+      .status { padding: 8px; margin: 8px 0; border-radius: 4px; }
+      .status.ok { background: #e8f5e9; color: #2e7d32; }
+      .status.pending { background: #fff3e0; color: #ef6c00; }
+    </style>
+  </head>
+  <body>
+    <h3>SIH 26171 Agent</h3>
+    <div id="status" class="status pending">Extension loaded</div>
+    <button id="testBtn">Test Connection</button>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

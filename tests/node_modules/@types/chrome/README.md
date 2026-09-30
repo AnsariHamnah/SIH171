@@ -1,0 +1,15 @@
+# Installation
+> `npm install --save @types/chrome`
+
+# Summary
+This package contains type definitions for chrome (https://developer.chrome.com/docs/extensions).
+
+# Details
+Files were exported from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/chrome.
+
+### Additional Details
+ * Last updated: Tue, 15 Sep 2026 20:33:28 GMT
+ * Dependencies: [@types/filesystem](https://npmjs.com/package/@types/filesystem), [@types/har-format](https://npmjs.com/package/@types/har-format)
+
+# Credits
+These definitions were written by [MatCarlson](https://github.com/MatCarlson), [Jason Xian](https://github.com/JasonXian), [userTim](https://github.com/usertim), [Nicolas Rodriguez](https://github.com/nicolas377), [Ido Salomon](https://github.com/idosal), [Federico Brigante](https://github.com/fregante), and [Erwan Jugand](https://github.com/erwanjugand).
